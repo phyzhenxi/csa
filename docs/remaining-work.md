@@ -74,3 +74,39 @@
 1. **P0-a 登录握手**（从 `lssproto_ClientLogin_recv` 与 `ServerDispatchMessage` 分发表切入）  
 2. **P0-b 命令签名**（`W`/`C`/`B` 三条优先）  
 3. **P1 存档 Java**（`csa.save` 包）
+
+---
+
+## 数据库接入（2026-10-16）
+
+| 项 | 值 |
+|----|-----|
+| 主机 | `192.168.2.100:3306`（MariaDB） |
+| 用户 | `root` |
+| 库名 | `csa` / 原 dump 为 `wpcsa` |
+| 凭据 | 仅 `config/db.local.json`（**gitignore**） |
+
+**当前状态**：TCP 可达，登录被拒：
+
+```text
+Host '192.168.2.8' is not allowed to connect to this MariaDB server
+```
+
+**需在 DB 服务器执行**：
+
+```sql
+CREATE USER IF NOT EXISTS 'csa'@'192.168.2.%' IDENTIFIED BY '0OKM)okm123';
+GRANT ALL PRIVILEGES ON csa.* TO 'csa'@'192.168.2.%';
+-- 若库名是 wpcsa：
+GRANT ALL PRIVILEGES ON wpcsa.* TO 'csa'@'192.168.2.%';
+FLUSH PRIVILEGES;
+```
+
+或临时放行 root：
+
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.2.%' IDENTIFIED BY '0OKM)okm123';
+FLUSH PRIVILEGES;
+```
+
+复测：`python scripts/db_probe.py`

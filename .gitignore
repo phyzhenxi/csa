@@ -1,6 +1,10 @@
-﻿# build
+# build
 java/out/
 *.class
 # local
 .DS_Store
 Thumbs.db
+
+# secrets / local db
+*.local.json
+config/db.local.json
