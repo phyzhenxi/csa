@@ -135,3 +135,12 @@ SIM SCENARIOS PASS
 - **MapWorld**：970 LS2MAP + mapset，CharLogin 出生点 floor 1997 (22,27)，W 撞墙拒绝
 - **start.bat / start.ps1 / stop.bat / check-env.ps1**：一键起停
 - 全量回归 **18/18 PASS**
+
+---
+
+## MapWorld 进游戏 + 一键启动
+
+- **MapWorld**：970 LS2MAP + mapset（17452 graphic），出生点 floor 1997 (22,27)
+- CharLogin 写入 spawn；W 撞墙拒绝、大跳拒绝
+- **start.bat / start.ps1 / stop.bat / check-env.ps1** 一键起停
+- check-env 全绿；全量回归 **18/18 PASS**
