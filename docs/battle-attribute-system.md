@@ -97,3 +97,27 @@ BATTLE_DamageSubCale @ 0x8220D25
 
 - 属性计算是纯函数，适合单测对拍
 - x87 `fistp` 截断行为需与 Java `Math.floor` / `(int)` 对齐并做黄金用例
+
+---
+
+## Java 实现
+
+`java/src/main/java/csa/battle/DamageCalculator.java`（自测 **DAMAGE CALC ALL PASS**）
+
+| 函数 | 对应 C | 常量 |
+|------|--------|------|
+| `baseAttack` | getRidePet 分支 + `/100` pet equip | — |
+| `baseDefense` | `* 0.7` | `0x82BC1B0` |
+| `ratioDamage` | `*8/7` / `*2` / `*1/16` / `*1/8` 分支 | `8,7,2,0.0625,0.125` |
+| `applyResists` | 四槽 `1 - r/200` | `200` |
+| `applyRandom` | `(1+(u-0.5)*0.3)` | `0x82D8960` |
+| `criticalDamage` | `crit*atk/def*0.5` | `0.5` |
+| `calc` | 完整流水线 | trunc=`Math.floor` |
+
+### 仍不确定（标注在源码注释）
+
+- helper `0x8076138`（clamp/rand）
+- dword `0x82C35A0 = 0x30000000`（2^-31，fistp 前缩放）
+- 四个 resist 打包字段的精确 WorkInt 编号（0x65x 族）
+
+**下一步对拍**：用真实战斗日志/客户端伤害数字校准 `ratioDamage` 分支系数。
