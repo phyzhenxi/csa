@@ -1,0 +1,31 @@
+# Gateway ↔ SimClient 联调记录
+
+日期：2026-10-16  
+命令：`GatewayMain 12345` + `SimClient 127.0.0.1 12345`
+
+## 交互
+
+```text
+ClientLogin => 1 ClientLogin ok
+CharList   => 2 CharList 0
+CharLogin  => 3 CharLogin ok
+W 100 200 1 => (no reply)
+C          => 5 P hello\Sworld
+B          => 6 B 3
+TK         => 7 MSG <checkStringErr 拒绝：空格属非法字符>
+```
+
+## 结论
+
+- 登录 → 角色列表 → 进角色 **状态机打通**
+- 移动 W 静默更新坐标
+- 对话 C 回显（空格转义 `\S` 正确）
+- 战斗 B 回显 action
+- TK 被 `checkStringErr` 拒（空格 `0x20`），与 C 约束一致
+
+## 复现
+
+```powershell
+java -cp out csa.client.GatewayMain 12345
+java -cp out csa.client.SimClient 127.0.0.1 12345
+```
