@@ -66,3 +66,17 @@ CharacterSave
 ```
 
 兼容策略：先原样读写 `key=value` 文本，再演进 JSON/二进制；保留 `DATAEND` 校验。
+
+---
+
+## Java 实现
+
+`java/src/main/java/csa/save/CharacterSaveCodec.java`：
+
+- `encode(Save)` → `key=value\n` 文本（289 int + 14 string + flg/skill/item/... + `DATAEND`）
+- `decode(String)` → `Save`
+- 转义与协议层同规则（`\\` `\S` `\n` `\r`，CJK 双字节）
+- **解析优先级**：先精确匹配 int/string 字段表，再走 section 前缀（避免 `titlelv`/`title_d` 被 `title*` 误吞）
+- 缓冲上限 `0x20000`
+
+自测：`CharacterSaveCodecSelfTest` → **SAVE CODEC ALL PASS**（含 289 字段全量 round-trip）
