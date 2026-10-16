@@ -102,3 +102,11 @@ SIM SCENARIOS PASS
 - **MapLoader**：楼层 `.dat` = `u32le w,h` + `w*h*6`（3×u16le/格）；战斗图 `"SAB "` + 400 BE u16
 - **SkillItemService**：`I/PI` 用道具、`PS` 技能、`SKUP` 升级
 - 全量回归 12/12 PASS
+
+---
+
+## TD/FM/WN + 地图 walk-flag
+
+- **TradeFamilyWindowService**：TD 交易（摆摊拒）、FM 家族、WN 窗口（seq/data 校验）
+- **walk-flag**：楼层 tile **word3==0 可走**，非 0 挡；void=`0xC000`；graphic=0 可走（旧启发式已纠正）
+- 全量回归 **13/13 PASS**

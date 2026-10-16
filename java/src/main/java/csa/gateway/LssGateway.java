@@ -39,6 +39,7 @@ public final class LssGateway {
     
     private csa.battle.BattleService battleService;
     private csa.game.SkillItemService skillItems;
+    private csa.game.TradeFamilyWindowService tradeFmWn;
 
     /** Connection session state. */
     public static final class Session {
@@ -115,6 +116,24 @@ public final class LssGateway {
             if (skillItems == null) return List.of("SKUP", "ERR");
             int idx = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
             return List.of("SKUP", skillItems.skillUp(idx));
+        });
+        handlers.put("TD", (s, f) -> {
+            if (tradeFmWn == null) return List.of("TD", "ERR");
+            int item = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            return List.of("TD", tradeFmWn.tradeRequest(s.charName, "partner", item));
+        });
+        handlers.put("FM", (s, f) -> {
+            if (tradeFmWn == null) return List.of("FM", "ERR");
+            String name = f.tokens.isEmpty() ? "" : LssProtocolCodec.demString(f.tokens.get(0));
+            return List.of("FM", name.isEmpty() ? tradeFmWn.familyLeave() : tradeFmWn.familyJoin(name));
+        });
+        handlers.put("WN", (s, f) -> {
+            if (tradeFmWn == null) return List.of("WN", "ERR");
+            int seq = f.tokens.size() > 0 ? (int) LssProtocolCodec.demInt(f.tokens.get(0)) : -1;
+            int obj = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
+            int sel = f.tokens.size() > 2 ? (int) LssProtocolCodec.demInt(f.tokens.get(2)) : 0;
+            String data = f.tokens.size() > 3 ? LssProtocolCodec.demString(f.tokens.get(3)) : "";
+            return List.of("WN", tradeFmWn.windowSelect(seq, obj, sel, data));
         });
     }
 
@@ -272,6 +291,10 @@ public final class LssGateway {
 
     public void setSkillItemService(csa.game.SkillItemService svc) {
         this.skillItems = svc;
+    }
+
+    public void setTradeFamilyWindowService(csa.game.TradeFamilyWindowService svc) {
+        this.tradeFmWn = svc;
     }
 
     String encode(long id, String cmd, Object... args) {

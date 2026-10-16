@@ -116,4 +116,28 @@ Java：`java/src/main/java/csa/map/MapLoader.java`（自测 `MapLoaderSelfTest` 
 | 地图 `map/*.dat`（亦称 `*.MAP`） | `u32le width,height` + 每格 6 字节（3×u16le：图块/物件/标志） |
 | 战斗 `data/battleMap/*.map` | 魔数 `SAB ` + 400× `u16be` 图块（804 字节，按 20×20） |
 
-`MapLoader.load(path) → MapData{width,height,byte[] tiles}`；`isWalkable` 暂定 tile 0 不可走、非 0 可走（TODO 解析真实 walk flag）。`WalkService.registerMap(floor, map)` 注册后 `isWalkable(floor,x,y)` 走 loader，未注册默认可走。
+`MapLoader.load(path) → MapData{width,height,byte[] tiles}`；`tiles` 为行走标志字节（0=可走，非 0=不可走）。
+
+**Walk-flag 推断**（多份 `map/*.dat` 比对）：每格第 3 个 `u16le` 为行走属性——`0` 可走，非 `0` 不可走（墙/物件/虚空）。虚空格三字均为 `0xC000`，经 graphic-0 虚空位一并封锁。图块 `0` + 标志 `0` 是合法地板（室内房间/室外地表），**不**按 graphic-0 封锁。自测 `1.dat` 具体格断言 → `WALKFLAG PASS`。
+
+`WalkService.registerMap(floor, map)` 注册后 `isWalkable(floor,x,y)` 走 loader，未注册默认可走。
+
+## TD / FM / WN（TradeFamilyWindowService）
+
+Java 实现：`java/src/main/java/csa/game/TradeFamilyWindowService.java`（自测 `TradeFamilyWindowServiceSelfTest` → `TRADE FAMILY WINDOW PASS`）。
+
+| 命令 | recv 地址 | 参数 | 结果 token | 二进制错误串 |
+|------|-----------|------|------------|--------------|
+| **TD** | 0x808EA00 | `data`（本层 API：`tradeRequest(player, partner, itemId)`） | `TD ok` / `TD ERR_STREET_VENDOR` / `TD ERR` | `摆摊状态下不能交易` |
+| **FM** | 0x808E940 | `data`（本层 API：`familyJoin(name)` / `familyLeave()`） | `FM ok` / `FM ERR` | — |
+| **WN** | 0x808F440 | `seqno,objindex,select,data` | `WN ok` / `WN ERR_BAD_WINDOW` / `WN ERR_EVENT` | `改封包!! 非法的窗口号` / `不接受召唤任务` |
+
+| 项 | 规则 |
+|----|------|
+| TD | 摆摊中（WorkInt 0x137）→ `ERR_STREET_VENDOR`；player/partner 空、自交易、itemId&lt;0 → `ERR` |
+| FM | join 空名 → `ERR`；leave 无家族 → `ERR`；join 成功写入 `familyName`，leave 清空 |
+| WN | data 限长 **0x800**；seqno 须匹配 `seedExpectedWindow`（-1 表示任意）；`select` 越界或非法窗口号 → `ERR_BAD_WINDOW`；`select=SELECT_SUMMON_TASK(9)` → `ERR_EVENT` |
+| state | 可 seed：`streetVendor`、`familyName`、`expectedWindowSeqno`、`lastWindow{seqno,objindex,select,data}` |
+| encode | `encodeWindowTokens` / `encodeTradeToken` 走 `LssProtocolCodec.mkInt` / `mkString` |
+
+自测输出：`TRADE FAMILY WINDOW PASS`

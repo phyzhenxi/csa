@@ -19,12 +19,21 @@ import java.nio.file.Path;
  *       tile ids (fixed 804-byte files → best-effort 20x20 grid).</li>
  * </ul>
  *
- * <p>Walkability is not fully decoded: only a byte per cell is kept
- * (low byte of the first tile word). See {@link #isWalkable}.</p>
+ * <p><b>Walk flags</b> (inferred from several {@code map/*.dat} samples):
+ * the third {@code uint16le} of each floor tile is the walk attribute.
+ * {@code 0} = walkable open floor; any other value = blocked
+ * (walls, objects, void). Void tiles encode as {@code 0xC000} on every
+ * word (graphic 0 with both high flag bits) and are also blocked via the
+ * graphic-0 void check. Plain graphic {@code 0} with flag {@code 0} is
+ * valid open floor (indoor room tiles and outdoor ground) and is
+ * <em>not</em> blocked.</p>
  */
 public final class MapLoader {
 
-    /** Decoded map grid. {@code tiles[y*width + x]} is one byte per cell. */
+    /**
+     * Decoded map grid. {@code tiles[y*width + x]} is the walk-block byte:
+     * {@code 0} = walkable, non-zero = blocked.
+     */
     public static final class MapData {
         public final int width;
         public final int height;
@@ -36,6 +45,7 @@ public final class MapLoader {
             this.tiles = tiles;
         }
 
+        /** Walk-block byte: 0 = walkable, non-zero = blocked. OOB returns -1. */
         public int tileAt(int x, int y) {
             if (x < 0 || y < 0 || x >= width || y >= height) return -1;
             return tiles[y * width + x] & 0xff;
@@ -79,8 +89,12 @@ public final class MapLoader {
         }
         byte[] tiles = new byte[w * h];
         for (int i = 0; i < tiles.length; i++) {
-            // first uint16le of each 6-byte tile = graphic id; keep low byte
-            tiles[i] = raw[8 + i * 6];
+            int off = 8 + i * 6;
+            int graphic = u16le(raw, off);       // word1
+            int flags = u16le(raw, off + 4);     // word3 = walk attribute
+            // Inferred rule: flags==0 → walkable. Void graphic (0xC000) also blocks.
+            boolean voidTile = (graphic & 0xC000) == 0xC000;
+            tiles[i] = (byte) ((flags == 0 && !voidTile) ? 0 : 1);
         }
         return new MapData(w, h, tiles);
     }
@@ -98,26 +112,26 @@ public final class MapLoader {
             h = 1;
         }
         // TODO: battle maps have no stored w/h; 20x20 is best-effort from 400 cells.
-        byte[] tiles = new byte[n];
-        for (int i = 0; i < n; i++) {
-            // BE uint16 tile id; keep low byte
-            tiles[i] = raw[5 + i * 2];
-        }
+        // Battle tiles are all open (no walk-flag field in the SAB layout).
+        byte[] tiles = new byte[n]; // 0 = walkable
         return new MapData(w, h, tiles);
     }
 
     /**
      * Walkability check against a loaded map.
      *
-     * <p>TODO: real client walk flags are not decoded yet. Best-effort rule:
-     * tile value 0 is blocked (empty), anything else is open. Out of bounds
-     * is blocked. When the third {@code uint16le} flag field of floor tiles
-     * (or a battle-map equivalent) is decoded, flip cells here instead.</p>
+     * <p>Floor maps: walkable iff tile walk-flag word (3rd uint16le) is 0
+     * and the cell is not void ({@code graphic & 0xC000 == 0xC000}).
+     * Out of bounds is blocked. Battle maps are fully open.</p>
      */
     public static boolean isWalkable(MapData map, int x, int y) {
         if (map == null) return true;
         if (x < 0 || y < 0 || x >= map.width || y >= map.height) return false;
-        return map.tileAt(x, y) != 0;
+        return map.tileAt(x, y) == 0;
+    }
+
+    private static int u16le(byte[] b, int off) {
+        return (b[off] & 0xff) | ((b[off + 1] & 0xff) << 8);
     }
 
     private static int u32le(byte[] b, int off) {
