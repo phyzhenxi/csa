@@ -161,3 +161,23 @@ TK 聊天在别处已有实现，本服务不重复 TK。
 | state | 可 seed：`streetVendor`、`lastPmsg{to,text}`、`completedJobs` |
 
 自测输出：`SOCIAL MISC PASS`
+## FS / EN / DP / DI（ActionSystemService）
+
+Java 实现：`java/src/main/java/csa/game/ActionSystemService.java`（自测 `ActionSystemServiceSelfTest` → `ACTION SYSTEM PASS`）。
+
+| 命令 | recv 地址 | 参数 | 结果 token | 备注 |
+|------|-----------|------|------------|------|
+| **FS** | 0x80902B0（size 576） | `flags` 位域 | `FS ok` | 逐 bit 调 setter `0x80B03E8`；本层记录 bitmask |
+| **EN** | 0x80910B0 | `x, y` | `EN ok` / `EN ERR_MODE` | 丢弃/放置；work 0x46==2 时拒绝 |
+| **DP** | 0x80926F0 | `itemId, dest`（dump/parcel） | `DP ok` / `DP ERR` | |
+| **DI** | 0x80928F0 | `slot, action`（item interact，非交易） | `DI ok` / `DI ERR` | |
+
+| 项 | 规则 |
+|----|------|
+| FS | `setFeatureFlags(flags)` 恒 `ok`，记录 `featureFlags` 位掩码 |
+| EN | `placeObject(x,y)`：`mode`（WorkInt 0x46）== **2** → `ERR_MODE`；否则 `ok` |
+| DP | `dumpParcel(itemId, dest)`：`itemId < 0` 或 dest 空 → `ERR`；成功记录 `lastDump{itemId,dest}` |
+| DI | `itemInteract(slot, action)`：`slot < 0` 或 action 空 → `ERR`；成功记录 `lastInteract{slot,action}` |
+| state | 可 seed：`featureFlags`、`mode`、`lastDump{itemId,dest}`、`lastInteract{slot,action}` |
+
+自测输出：`ACTION SYSTEM PASS`

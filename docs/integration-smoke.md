@@ -119,3 +119,11 @@ SIM SCENARIOS PASS
 - **ServerMapLoader**：LS2MAP（BE，44B 头 + tile/obj 网格）
 - **MapsetWalkTable**：`mapset.txt` col0=graphic id，col3=0 可走/1 挡/2 特殊
 - 全量回归 **15/15 PASS**
+
+---
+
+## FS/EN/DP/DI + EV/MU/KN/PR
+
+- **ActionSystemService**：功能开关、放置、包裹、道具交互
+- **EventSocialService**：事件、移动单元、宠物改名、组队招募
+- 全量回归 **17/17 PASS**

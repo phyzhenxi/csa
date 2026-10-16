@@ -41,6 +41,8 @@ public final class LssGateway {
     private csa.game.SkillItemService skillItems;
     private csa.game.TradeFamilyWindowService tradeFmWn;
     private csa.game.SocialMiscService socialMisc;
+    private csa.game.ActionSystemService actionSys;
+    private csa.game.EventSocialService eventSocial;
 
     /** Connection session state. */
     public static final class Session {
@@ -157,6 +159,56 @@ public final class LssGateway {
             int jobId = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
             int mode = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
             return List.of("JD", mode == 0 ? socialMisc.jobDailyAccept(jobId) : socialMisc.jobDailyComplete(jobId));
+        });
+        handlers.put("FS", (s, f) -> {
+            if (actionSys == null) return List.of("FS", "ERR");
+            int flags = f.tokens.isEmpty() ? 0 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            return List.of("FS", actionSys.setFeatureFlags(flags));
+        });
+        handlers.put("EN", (s, f) -> {
+            if (actionSys == null) return List.of("EN", "ERR");
+            int x = f.tokens.size() > 0 ? (int) LssProtocolCodec.demInt(f.tokens.get(0)) : 0;
+            int y = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
+            return List.of("EN", actionSys.placeObject(x, y));
+        });
+        handlers.put("DP", (s, f) -> {
+            if (actionSys == null) return List.of("DP", "ERR");
+            int item = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            String dest = f.tokens.size() > 1 ? LssProtocolCodec.demString(f.tokens.get(1)) : "";
+            return List.of("DP", actionSys.dumpParcel(item, dest));
+        });
+        handlers.put("DI", (s, f) -> {
+            if (actionSys == null) return List.of("DI", "ERR");
+            int slot = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            String act = f.tokens.size() > 1 ? LssProtocolCodec.demString(f.tokens.get(1)) : "";
+            return List.of("DI", actionSys.itemInteract(slot, act));
+        });
+        handlers.put("EV", (s, f) -> {
+            if (eventSocial == null) return List.of("EV", "ERR");
+            int seq = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            int obj = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : -1;
+            String data = f.tokens.size() > 2 ? LssProtocolCodec.demString(f.tokens.get(2)) : "";
+            return List.of("EV", eventSocial.eventTrigger(seq, obj, data));
+        });
+        handlers.put("MU", (s, f) -> {
+            if (eventSocial == null) return List.of("MU", "ERR");
+            int x = f.tokens.size() > 0 ? (int) LssProtocolCodec.demInt(f.tokens.get(0)) : 0;
+            int y = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
+            int dir = f.tokens.size() > 2 ? (int) LssProtocolCodec.demInt(f.tokens.get(2)) : 0;
+            int flags = f.tokens.size() > 3 ? (int) LssProtocolCodec.demInt(f.tokens.get(3)) : 0;
+            return List.of("MU", eventSocial.moveUnit(x, y, dir, flags));
+        });
+        handlers.put("KN", (s, f) -> {
+            if (eventSocial == null) return List.of("KN", "ERR");
+            String name = f.tokens.isEmpty() ? "" : LssProtocolCodec.demString(f.tokens.get(0));
+            return List.of("KN", eventSocial.renamePet(name));
+        });
+        handlers.put("PR", (s, f) -> {
+            if (eventSocial == null) return List.of("PR", "ERR");
+            int x = f.tokens.size() > 0 ? (int) LssProtocolCodec.demInt(f.tokens.get(0)) : 0;
+            int y = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
+            int zone = f.tokens.size() > 2 ? (int) LssProtocolCodec.demInt(f.tokens.get(2)) : 1;
+            return List.of("PR", eventSocial.partyRecruit(x, y, zone));
         });
     }
 
@@ -322,6 +374,14 @@ public final class LssGateway {
 
     public void setSocialMiscService(csa.game.SocialMiscService svc) {
         this.socialMisc = svc;
+    }
+
+    public void setActionSystemService(csa.game.ActionSystemService svc) {
+        this.actionSys = svc;
+    }
+
+    public void setEventSocialService(csa.game.EventSocialService svc) {
+        this.eventSocial = svc;
     }
 
     String encode(long id, String cmd, Object... args) {

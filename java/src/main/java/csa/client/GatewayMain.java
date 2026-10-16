@@ -33,6 +33,8 @@ public final class GatewayMain {
                 gw.setSkillItemService(skills);
                 gw.setTradeFamilyWindowService(new csa.game.TradeFamilyWindowService());
                 gw.setSocialMiscService(new csa.game.SocialMiscService());
+                gw.setActionSystemService(new csa.game.ActionSystemService());
+                gw.setEventSocialService(new csa.game.EventSocialService());
                 gw.setDbAuth(auth);
                 System.out.println("DbAuth enabled: " + user + "@" + host + "/" + db);
             } catch (Exception e) {
