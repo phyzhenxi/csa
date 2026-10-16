@@ -43,6 +43,8 @@ public final class LssGateway {
     private csa.game.SocialMiscService socialMisc;
     private csa.game.ActionSystemService actionSys;
     private csa.game.EventSocialService eventSocial;
+    /** Floor maps + walk table for spawn / W validation. Empty world = permissive. */
+    private csa.map.MapWorld mapWorld = new csa.map.MapWorld();
 
     /** Connection session state. */
     public static final class Session {
@@ -53,7 +55,7 @@ public final class LssGateway {
         public int servId;
         public LoginHandshake.LoginState state = LoginHandshake.LoginState.NOT_LOGIN;
         public String charName = "";
-        public int x, y, dir;
+        public int x, y, dir, floor;
 
         public Session(int fd) { this.fd = fd; }
     }
@@ -74,11 +76,16 @@ public final class LssGateway {
                 int ny = (int) LssProtocolCodec.demInt(f.tokens.get(1));
                 int nd = (int) LssProtocolCodec.demInt(f.tokens.get(2));
                 csa.map.WalkService.Pos p = csa.map.WalkService.applyMove(s.x, s.y, nx, ny, nd);
-                if (p != null) {
-                    s.x = p.x;
-                    s.y = p.y;
-                    s.dir = p.dir;
+                if (p == null) {
+                    return List.of();
                 }
+                // LS2MAP/mapset: destination must be open (turn-in-place exempt)
+                if ((p.x != s.x || p.y != s.y) && !mapWorld.isWalkable(s.floor, p.x, p.y)) {
+                    return List.of();
+                }
+                s.x = p.x;
+                s.y = p.y;
+                s.dir = p.dir;
             }
             return List.of();
         });
@@ -327,6 +334,12 @@ public final class LssGateway {
         }
         s.charName = name;
         s.state = LoginHandshake.LoginState.CHAR_LOGIN;
+        // real spawn point on a gmsv LS2MAP floor (1997 preferred, else 101)
+        csa.map.MapWorld.Spawn sp = mapWorld.spawn();
+        s.x = sp.x;
+        s.y = sp.y;
+        s.dir = sp.dir;
+        s.floor = sp.floor;
         String savePayload = "";
         if (saveStore != null) {
             try {
@@ -347,6 +360,15 @@ public final class LssGateway {
     /** Attach CSAlogin authenticator (optional). */
     public void setDbAuth(csa.db.DbAuth auth) {
         this.dbAuth = auth;
+    }
+
+    /** Attach LS2MAP world (spawn + W walkability). {@code null} resets to empty. */
+    public void setMapWorld(csa.map.MapWorld world) {
+        this.mapWorld = world != null ? world : new csa.map.MapWorld();
+    }
+
+    public csa.map.MapWorld mapWorld() {
+        return mapWorld;
     }
 
     /** Attach CSAinfo character repository (optional). */

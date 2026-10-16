@@ -127,3 +127,11 @@ SIM SCENARIOS PASS
 - **ActionSystemService**：功能开关、放置、包裹、道具交互
 - **EventSocialService**：事件、移动单元、宠物改名、组队招募
 - 全量回归 **17/17 PASS**
+
+---
+
+## MapWorld 进游戏 + 一键启动
+
+- **MapWorld**：970 LS2MAP + mapset，CharLogin 出生点 floor 1997 (22,27)，W 撞墙拒绝
+- **start.bat / start.ps1 / stop.bat / check-env.ps1**：一键起停
+- 全量回归 **18/18 PASS**
