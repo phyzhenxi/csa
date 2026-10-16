@@ -1,0 +1,73 @@
+﻿{
+  "feature": "P0-a login handshake",
+  "source_binary": "gmsvjt",
+  "sequence": [
+    {"step": 1, "dir": "C->S", "cmd": "ClientLogin", "args": ["cdkey", "password", "mac_token", "servid:int"]},
+    {"step": 2, "dir": "S->C", "cmd": "ClientLogin", "args": ["result:string"], "ok": "ok"},
+    {"step": 3, "dir": "C->S", "cmd": "CharList"},
+    {"step": 4, "dir": "S->C", "cmd": "CharList", "args": ["chars_or_failed"]},
+    {"step": 5, "dir": "C->S", "cmd": "CharLogin", "args": ["charname"]},
+    {"step": 6, "dir": "S->C", "cmd": "CharLogin", "args": ["result"]}
+  ],
+  "clientlogin": {
+    "recv": "lssproto_ClientLogin_recv @ 0x8094200",
+    "send": "lssproto_ClientLogin_send @ 0x80A4FF0",
+    "stores": ["CONNECT_setCdkey", "CONNECT_setPasswd", "CONNECT_setCtype=2", "CONNECT_setServid", "CONNECT_setMAC", "CONNECT_setState=2"],
+    "conn_layout": {"stride": "0x13AC", "cdkey_off": "0x1C", "passwd_off": "0x58", "passwd_max": "0x21"}
+  },
+  "checkStringErr": {
+    "symbol": "0x808D620",
+    "reject_bytes": ["0x00-0x20", "0x27", "0x3B", "0x7F", "0x80", "0xFF"],
+    "log": " StringDog! "
+  },
+  "mac_token": {
+    "format": "gmsv-<alnum>",
+    "regex": "^gmsv-[0-9A-Za-z-]+$",
+    "lua_gate": "data/ablua/freelogincheck.lua FreeLoginCheck",
+    "reject_text": ["由于你使用非本服的认可的程序进入游戏，所以禁止你的登陆！", "由于你的版本过旧，请更新后再进入游戏！"]
+  },
+  "result_texts": {
+    "ok": "ok",
+    "empty": "账号或密码不得为空。",
+    "bad_chars": "异常字符的用户名",
+    "locked_account": "您的游戏账号已被锁定，无法登录游戏，如有疑问请联系客服。",
+    "locked_ip": "您的IP已被锁定，无法登录游戏，如有疑问请联系客服。",
+    "bad_password": "您的密码输入错误，请核对后登录。（注意大小写）",
+    "not_registered": "您的账号尚未注册，请登录主页，注册后登录游戏。"
+  },
+  "envelope": {
+    "format": "&;%d%s;#;",
+    "format_va": "0x82BE01E",
+    "func_id": "code + 0x17",
+    "util_mkstring": {
+      "va": "0x8099220",
+      "alphabet": "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz{}",
+      "terminator": ";"
+    },
+    "util_mkint": {
+      "va": "0x8099300",
+      "transform": "NOT integer then encode",
+      "hint_va": "0x82BE014",
+      "hint": "3142",
+      "terminator": ";"
+    },
+    "key_buffer": {
+      "va": "0x89A4840",
+      "content": "cdkey + \"1234567\"",
+      "magic": "1234567"
+    }
+  },
+  "saac": {
+    "ACServerLogin": {
+      "send_args": ["int", "string", "string"],
+      "recv_expect_first_arg": "successful",
+      "version_banner": "公益-PW石器特别版 2017年03月23日00:17:17"
+    },
+    "ACCharLogin": {
+      "send_args": ["int", "string", "string", "string", "string"]
+    }
+  },
+  "errors": {
+    "CharList": ["failed", "请不要进行非法登陆游戏！", "因重复登陆而掉线!", "错误：重复登陆导致掉线\\n", "你的账号正在离线，请再次登陆！", "Can't access char have no name\\n", "Already Logged in\\n"]
+  }
+}

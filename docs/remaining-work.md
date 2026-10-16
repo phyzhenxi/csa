@@ -20,7 +20,7 @@
 **协议编解码 P0（帧/base62/escape）已完成。**  
 若以「客户端能登录进游戏」为 P0 标准，仍缺：
 
-### P0-a 登录/鉴权握手（阻塞）
+### P0-a 登录/鉴权握手（✅ 已完成）
 
 - `ClientLogin` / `CharLogin` / `ACServerLogin` 时序
 - 魔术串 `&;129;PtdT8oWQ4kSK}...#;` 的发送时机与响应
