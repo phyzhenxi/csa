@@ -110,3 +110,10 @@ FLUSH PRIVILEGES;
 ```
 
 复测：`python scripts/db_probe.py`
+
+### 数据库接入结果
+
+- 用户 `csa@192.168.2.%` 可连库 `csa`（26 表，结构同 csa.sql）
+- `CSAlogin` / `CSAinfo` 已核对；已种测试账号 `user1/pass1`
+- Java `csa.db.DbAuth`：`DB AUTH PASS`（对/错/未注册）
+- 注意：`Lock` 为 MariaDB 保留字，SQL 需反引号

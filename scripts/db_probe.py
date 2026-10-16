@@ -3,7 +3,7 @@ sys.path.insert(0, r"E:\tools\pylibs")
 import pymysql
 
 cfg_path = os.path.join(os.path.dirname(__file__), "..", "config", "db.local.json")
-cfg = json.load(open(cfg_path, encoding="utf-8"))
+cfg = json.load(open(cfg_path, encoding="utf-8-sig"))
 try:
     conn = pymysql.connect(host=cfg["host"], port=cfg.get("port", 3306),
                            user=cfg["user"], password=cfg["password"],
