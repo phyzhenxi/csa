@@ -141,3 +141,23 @@ Java 实现：`java/src/main/java/csa/game/TradeFamilyWindowService.java`（自�
 | encode | `encodeWindowTokens` / `encodeTradeToken` 走 `LssProtocolCodec.mkInt` / `mkString` |
 
 自测输出：`TRADE FAMILY WINDOW PASS`
+
+## PMSG / STREET_VENDOR / JOBDAILY（SocialMiscService）
+
+Java 实现：`java/src/main/java/csa/game/SocialMiscService.java`（自测 `SocialMiscServiceSelfTest` → `SOCIAL MISC PASS`）。
+TK 聊天在别处已有实现，本服务不重复 TK。
+
+| 命令 | recv 地址 | 参数 | 结果 token | 二进制错误串 |
+|------|-----------|------|------------|--------------|
+| **PMSG** | 0x808ECD0 | `to, text`（本层 API：`privateMessage(to, text)`） | `PMSG ok` / `PMSG ERR` | —（账号锁定见 LoginHandshake） |
+| **STREET_VENDOR** | 0x808CF50 | 摆摊开关（本层 API：`streetVendorOpen(name)` / `streetVendorClose()`） | `STV ok` / `STV ERR` | —（相关：`摆摊状态下不能交易` 在 TD） |
+| **JOBDAILY** | 0x808CEC0 | `jobId`（本层 API：`jobDailyAccept(jobId)` / `jobDailyComplete(jobId)`） | `JD ok` / `JD ERR` / `JD ERR_DONE` | — |
+
+| 项 | 规则 |
+|----|------|
+| PMSG | 私信/邮件类消息。`to` 或 `text` 空 → `ERR`；`text` 长度 > **200** → `ERR`；成功记录 `lastPmsg{to,text}` |
+| STV | `streetVendorOpen`：空名或已在摆摊 → `ERR`；成功置 vendor flag（WorkInt 0x137）并记录摊名。`streetVendorClose`：未摆摊 → `ERR`；成功清 flag |
+| JD | `jobId` < 0 → `ERR`；complete 未 accept → `ERR`；已完成再 accept/complete → `ERR_DONE`；accept 可重复（幂等 ok） |
+| state | 可 seed：`streetVendor`、`lastPmsg{to,text}`、`completedJobs` |
+
+自测输出：`SOCIAL MISC PASS`

@@ -40,6 +40,7 @@ public final class LssGateway {
     private csa.battle.BattleService battleService;
     private csa.game.SkillItemService skillItems;
     private csa.game.TradeFamilyWindowService tradeFmWn;
+    private csa.game.SocialMiscService socialMisc;
 
     /** Connection session state. */
     public static final class Session {
@@ -134,6 +135,28 @@ public final class LssGateway {
             int sel = f.tokens.size() > 2 ? (int) LssProtocolCodec.demInt(f.tokens.get(2)) : 0;
             String data = f.tokens.size() > 3 ? LssProtocolCodec.demString(f.tokens.get(3)) : "";
             return List.of("WN", tradeFmWn.windowSelect(seq, obj, sel, data));
+        });
+        handlers.put("PMSG", (s, f) -> {
+            if (socialMisc == null) return List.of("PMSG", "ERR");
+            String to = f.tokens.isEmpty() ? "" : LssProtocolCodec.demString(f.tokens.get(0));
+            String text = f.tokens.size() > 1 ? LssProtocolCodec.demString(f.tokens.get(1)) : "";
+            return List.of("PMSG", socialMisc.privateMessage(to, text));
+        });
+        handlers.put("STV", (s, f) -> {
+            if (socialMisc == null) return List.of("STV", "ERR");
+            String name = f.tokens.isEmpty() ? "" : LssProtocolCodec.demString(f.tokens.get(0));
+            return List.of("STV", socialMisc.isStreetVendor() ? socialMisc.streetVendorClose() : socialMisc.streetVendorOpen(name));
+        });
+        handlers.put("STREET_VENDOR", (s, f) -> {
+            if (socialMisc == null) return List.of("STV", "ERR");
+            String name = f.tokens.isEmpty() ? "" : LssProtocolCodec.demString(f.tokens.get(0));
+            return List.of("STV", socialMisc.isStreetVendor() ? socialMisc.streetVendorClose() : socialMisc.streetVendorOpen(name));
+        });
+        handlers.put("JOBDAILY", (s, f) -> {
+            if (socialMisc == null) return List.of("JD", "ERR");
+            int jobId = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            int mode = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
+            return List.of("JD", mode == 0 ? socialMisc.jobDailyAccept(jobId) : socialMisc.jobDailyComplete(jobId));
         });
     }
 
@@ -295,6 +318,10 @@ public final class LssGateway {
 
     public void setTradeFamilyWindowService(csa.game.TradeFamilyWindowService svc) {
         this.tradeFmWn = svc;
+    }
+
+    public void setSocialMiscService(csa.game.SocialMiscService svc) {
+        this.socialMisc = svc;
     }
 
     String encode(long id, String cmd, Object... args) {

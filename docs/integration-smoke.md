@@ -110,3 +110,12 @@ SIM SCENARIOS PASS
 - **TradeFamilyWindowService**：TD 交易（摆摊拒）、FM 家族、WN 窗口（seq/data 校验）
 - **walk-flag**：楼层 tile **word3==0 可走**，非 0 挡；void=`0xC000`；graphic=0 可走（旧启发式已纠正）
 - 全量回归 **13/13 PASS**
+
+---
+
+## 社交杂项 + 服务端 LS2MAP
+
+- **SocialMiscService**：PMSG 私聊、STREET_VENDOR 摆摊、JOBDAILY 日常
+- **ServerMapLoader**：LS2MAP（BE，44B 头 + tile/obj 网格）
+- **MapsetWalkTable**：`mapset.txt` col0=graphic id，col3=0 可走/1 挡/2 特殊
+- 全量回归 **15/15 PASS**

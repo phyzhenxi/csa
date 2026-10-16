@@ -117,3 +117,29 @@ FLUSH PRIVILEGES;
 - `CSAlogin` / `CSAinfo` 已核对；已种测试账号 `user1/pass1`
 - Java `csa.db.DbAuth`：`DB AUTH PASS`（对/错/未注册）
 - 注意：`Lock` 为 MariaDB 保留字，SQL 需反引号
+
+## LS2MAP / mapset（gmsv 服务器地图，2026-10-16）
+
+**格式**（`data/map/**`，全 BE；1373/1391 样本精确匹配，其余有多余尾部字节）：
+
+```text
+offset  size  field
+0       6     magic "LS2MAP"
+6       2     u16be map id（与数字文件名一致）
+8       32    GBK 地图名，常以 "|0" 结尾，NUL 填充
+40      2     u16be width
+42      2     u16be height
+44      w*h*4 cells: u16be tile graphic, u16be object graphic
+```
+
+**mapset.txt**（`data/map/mapset.txt`）：空白分隔行；col0 = tile/obj graphic id（不是 floor/map id）；**col3 = 走路属性** `0` 开放 / `1` 阻挡 / `2` 特殊。实测 17452 条：0=11082, 1=6283, 2=87。LS2MAP 格子的 tile/obj id 在表内 100% 命中。
+
+**走路判定**（`ServerMapLoader.cellWalkAttr` / `isWalkable`）：
+
+- 出界 → 阻挡
+- tile 查 mapset（未知按阻挡）
+- obj id `0` = 空物件，不挡（尽管 mapset id 0 自身 col3=1）
+- 任一层阻挡 → 1；否则任一层特殊 → 2；否则 0
+- `isWalkable` 仅开放(0)为可走
+
+**Java**：`csa.map.ServerMapLoader` / `csa.map.MapsetWalkTable` / `csa.map.ServerMapSelfTest`（输出 `SERVER MAP PASS`）。

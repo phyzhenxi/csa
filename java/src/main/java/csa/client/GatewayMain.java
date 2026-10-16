@@ -32,6 +32,7 @@ public final class GatewayMain {
                 skills.seedSkill(7, 3);
                 gw.setSkillItemService(skills);
                 gw.setTradeFamilyWindowService(new csa.game.TradeFamilyWindowService());
+                gw.setSocialMiscService(new csa.game.SocialMiscService());
                 gw.setDbAuth(auth);
                 System.out.println("DbAuth enabled: " + user + "@" + host + "/" + db);
             } catch (Exception e) {
