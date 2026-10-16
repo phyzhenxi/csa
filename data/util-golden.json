@@ -1,0 +1,272 @@
+[
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "",
+    "output": ";"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "a",
+    "output": "{W;"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "ab",
+    "output": "{eK;"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "abc",
+    "output": "{e4V;"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "hello",
+    "output": "5qKY9SK;"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "Hello World!",
+    "output": "bqKY9SKFqSqZ9maF;"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "测试",
+    "output": "FfyvnY;"
+  },
+  {
+    "op": "mkString",
+    "key": "cary",
+    "input": "id=1|",
+    "output": "6maMEFL;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "0",
+    "output": "YWnuYa;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "1",
+    "output": "YSnuYa;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "42",
+    "output": "YuluYa;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "-1",
+    "output": "ZXovZ;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "2147483647",
+    "output": "ZXoPZ;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "-2147483648",
+    "output": "YWnOYa;"
+  },
+  {
+    "op": "mkInt",
+    "key": "cary",
+    "input": "287454020",
+    "output": "0GTqla;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "",
+    "output": ";"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "a",
+    "output": "iE;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "ab",
+    "output": "iMX;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "abc",
+    "output": "iMHc;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "hello",
+    "output": "pYXftAX;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "Hello World!",
+    "output": "JYXftAXMYA1gtUnM;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "测试",
+    "output": "zN90VG;"
+  },
+  {
+    "op": "mkString",
+    "key": "user1234567",
+    "input": "id=1|",
+    "output": "qUnTyzY;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "0",
+    "output": "qoanqs;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "1",
+    "output": "qkanqs;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "42",
+    "output": "qAYnqs;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "-1",
+    "output": "rpbor;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "2147483647",
+    "output": "rpbIr;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "-2147483648",
+    "output": "qoaHqs;"
+  },
+  {
+    "op": "mkInt",
+    "key": "user1234567",
+    "input": "287454020",
+    "output": "IYGj1s;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "",
+    "output": ";"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "a",
+    "output": "0V;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "ab",
+    "output": "0dZ;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "abc",
+    "output": "0dJq;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "hello",
+    "output": "7pZtBRZ;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "Hello World!",
+    "output": "dpZtBRZasR3uBlpa;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "测试",
+    "output": "HeBEpX;"
+  },
+  {
+    "op": "mkString",
+    "key": "abcd1234567",
+    "input": "id=1|",
+    "output": "8lphGEa;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "0",
+    "output": "WXYZWb;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "1",
+    "output": "WTYZWb;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "42",
+    "output": "WvWZWb;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "-1",
+    "output": "XYZaX;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "2147483647",
+    "output": "XYZ4X;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "-2147483648",
+    "output": "WXY3Wb;"
+  },
+  {
+    "op": "mkInt",
+    "key": "abcd1234567",
+    "input": "287454020",
+    "output": "{HEVjb;"
+  }
+]

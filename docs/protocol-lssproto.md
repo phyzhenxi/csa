@@ -102,3 +102,20 @@ saacproto 同格式：`saacproto_CreateHeader` @ `0x80A27D0`
 ## 验证状态
 
 `LssProtocolCodecSelfTest`：**25 项 ALL PASS**（base62 / escape / frame round-trip）。
+
+---
+
+## util_mk 黄金向量对拍
+
+`scripts/util_golden.py` 按 capstone 反汇编写 Python 参考实现，生成 `data/util-golden.json`（45 条）。  
+`UtilGoldenTest` 用其中 24 条对拍 Java `UtilCodec` → **UTIL GOLDEN ALL PASS**。
+
+| 算法 | 说明 |
+|------|------|
+| `swapint("3142")` | 4 字节置换：dest[0]=src[2], dest[1]=src[0], dest[2]=src[3], dest[3]=src[1] |
+| `util_256to64_shl` | 3 字节→4 字符，`(bits - key[i]) & 0x3f` → alphabet |
+| `util_256to64_shr` | 同布局，`(bits + key[i]) & 0x3f` |
+| 密钥 | 空则 `cary`；登录路径 `cdkey+"1234567"` |
+| 尾缀 | `;`；信封 `&;%d%s;#;` |
+
+**限制**：对拍是 Python↔Java 一致性（均源自同一反汇编），尚未与真机 C 输出逐字节比对。真客户端联调时若信封不匹配，以真实帧为准再校准。
