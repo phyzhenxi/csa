@@ -1,0 +1,194 @@
+{
+  "item": {
+    "format_kv": "%s%c%d%c / %s%c%s%c",
+    "mode0_separators": {
+      "kv": "=",
+      "pair": "|"
+    },
+    "mode1_separators": {
+      "kv": ":",
+      "pair": ","
+    },
+    "buffer": "0x8401480 size 0x1000",
+    "fields": [
+      {
+        "name": "id",
+        "index": 0
+      },
+      {
+        "name": "bi",
+        "index": 1
+      },
+      {
+        "name": "tg",
+        "index": 5
+      },
+      {
+        "name": "dib",
+        "index": 7
+      },
+      {
+        "name": "upin",
+        "index": 8
+      },
+      {
+        "name": "dmce",
+        "index": 14
+      },
+      {
+        "name": "mdmce",
+        "index": 15
+      },
+      {
+        "name": "ann",
+        "index": 19
+      },
+      {
+        "name": "anx",
+        "index": 20
+      },
+      {
+        "name": "ma",
+        "index": 21
+      },
+      {
+        "name": "md",
+        "index": 22
+      },
+      {
+        "name": "mh",
+        "index": 23
+      },
+      {
+        "name": "mm",
+        "index": 24
+      },
+      {
+        "name": "mq",
+        "index": 25
+      },
+      {
+        "name": "ml",
+        "index": 26
+      },
+      {
+        "name": "mc",
+        "index": 27
+      },
+      {
+        "name": "mv",
+        "index": 28
+      },
+      {
+        "name": "mat",
+        "index": 29
+      },
+      {
+        "name": "mav",
+        "index": 30
+      },
+      {
+        "name": "mid",
+        "index": 31
+      },
+      {
+        "name": "mpr",
+        "index": 32
+      },
+      {
+        "name": "mu",
+        "index": 33
+      },
+      {
+        "name": "ll",
+        "index": 67
+      },
+      {
+        "name": "mrf",
+        "index": 68
+      },
+      {
+        "name": "npo",
+        "index": 47
+      },
+      {
+        "name": "npa",
+        "index": 48
+      },
+      {
+        "name": "nsl",
+        "index": 49
+      },
+      {
+        "name": "nst",
+        "index": 50
+      },
+      {
+        "name": "ndr",
+        "index": 51
+      },
+      {
+        "name": "nco",
+        "index": 52
+      },
+      {
+        "name": "coloer",
+        "index": 74
+      },
+      {
+        "name": "itime",
+        "index": 84
+      },
+      {
+        "name": "na",
+        "index": 0
+      },
+      {
+        "name": "sn",
+        "index": 1
+      },
+      {
+        "name": "en",
+        "index": 2
+      },
+      {
+        "name": "ar",
+        "index": 3
+      },
+      {
+        "name": "acode",
+        "index": 4
+      },
+      {
+        "name": "inlaycode",
+        "index": 5
+      },
+      {
+        "name": "cdk",
+        "index": 6
+      },
+      {
+        "name": "forname",
+        "index": 7
+      }
+    ]
+  },
+  "skill": {
+    "format": "%s=%d|",
+    "fields": [
+      "lv",
+      "id"
+    ],
+    "note": "2 int fields; trailing | trimmed"
+  },
+  "pet": {
+    "int_format": "%s:%d|",
+    "string_format": "%s:%s|",
+    "psk_format": "psk%d:%d|",
+    "ptsk_format": "ptsk%d:%d|",
+    "pitem_format": "pitem%d:%s|",
+    "buffer": "0x83667C0 size 0x2000",
+    "int_field_count": 289,
+    "note": "reuses character int field names from 0x8317DC0"
+  }
+}

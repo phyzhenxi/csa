@@ -80,3 +80,18 @@ CharacterSave
 - 缓冲上限 `0x20000`
 
 自测：`CharacterSaveCodecSelfTest` → **SAVE CODEC ALL PASS**（含 289 字段全量 round-trip）
+
+---
+
+## 道具 / 宠物 / 技能嵌套串
+
+详见 `data/item-pet-strings.json` 与 `java/.../ItemPetCodec.java`（**ITEM PET ALL PASS**）。
+
+| 类型 | 格式 | 入口 |
+|------|------|------|
+| **道具** | `key=val\|key=val\|`（mode0）或 `key:val,key:val,`（mode1） | `ITEM_makeStringFromItemData` @ `0x81C36DE` |
+| **技能** | `lv=%d\|id=%d\|`（去尾 `\|`） | `SKILL_makeStringFromSkillData` @ `0x80DDFA8` |
+| **宠物** | `key:value\|` + `psk%d:%d\|` + `ptsk%d:%d\|` + `pitem%d:%s\|` | `CHAR_makePetStringFromPetIndex` @ `0x80B437F` |
+
+道具字段表 40 项（`id,bi,tg,dib,upin,dmce,...,forname`），结构 16 字节记录 `name_ptr, pad, index, pad` @ `0x832FDA0`。  
+宠物 int 字段沿用角色 289 名，但分隔符是 **`:`** 而非 `=`。
