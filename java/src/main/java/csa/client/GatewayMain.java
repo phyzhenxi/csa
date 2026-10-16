@@ -1,18 +1,45 @@
 package csa.client;
 
+import csa.db.DbAuth;
 import csa.gateway.LssGateway;
 
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 
-/** Boot LssGateway on 127.0.0.1:1234 for integration smoke. */
+/**
+ * Boot LssGateway with optional MariaDB auth.
+ * Env: CSA_DB_HOST / CSA_DB_PORT / CSA_DB_USER / CSA_DB_PASS / CSA_DB_NAME
+ *      CSA_DB_DISABLE=1  to skip DB
+ */
 public final class GatewayMain {
     public static void main(String[] args) throws Exception {
         int port = args.length > 0 ? Integer.parseInt(args[0]) : 1234;
+        LssGateway gw = new LssGateway();
+        if (!"1".equals(System.getenv("CSA_DB_DISABLE"))) {
+            String host = env("CSA_DB_HOST", "192.168.2.100");
+            int dbPort = Integer.parseInt(env("CSA_DB_PORT", "3306"));
+            String user = env("CSA_DB_USER", "csa");
+            String pass = env("CSA_DB_PASS", "");
+            String db = env("CSA_DB_NAME", "csa");
+            try {
+                DbAuth auth = new DbAuth(host, dbPort, user, pass, db);
+                gw.setDbAuth(auth);
+                System.out.println("DbAuth enabled: " + user + "@" + host + "/" + db);
+            } catch (Exception e) {
+                System.out.println("DbAuth DISABLED (connect fail): " + e.getMessage());
+            }
+        } else {
+            System.out.println("DbAuth disabled by CSA_DB_DISABLE=1");
+        }
         try (ServerSocket ss = new ServerSocket()) {
             ss.bind(new InetSocketAddress("127.0.0.1", port));
             System.out.println("LssGateway listening on 127.0.0.1:" + port);
-            new LssGateway().serve(ss);
+            gw.serve(ss);
         }
+    }
+
+    private static String env(String k, String d) {
+        String v = System.getenv(k);
+        return v == null || v.isEmpty() ? d : v;
     }
 }

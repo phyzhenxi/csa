@@ -29,3 +29,20 @@ TK         => 7 MSG <checkStringErr 拒绝：空格属非法字符>
 java -cp out csa.client.GatewayMain 12345
 java -cp out csa.client.SimClient 127.0.0.1 12345
 ```
+---
+
+## DB 登录联调（2026-10-16）
+
+```text
+DbAuth: user1/pass1 => OK / wrong => bad_password / nobody => not_registered
+Gateway: ClientLogin => &;95...;#;  (信封)
+```
+
+启动：
+
+```powershell
+$env:CSA_DB_PASS = "<password>"
+java -cp out;jars\mysql-connector-j.jar csa.client.GatewayMain 1234
+```
+
+`CSA_DB_DISABLE=1` 可关掉数据库只测协议。

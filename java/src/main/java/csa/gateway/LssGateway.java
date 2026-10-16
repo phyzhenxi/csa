@@ -32,6 +32,8 @@ public final class LssGateway {
 
     public static final Charset GBK = Charset.forName("GBK");
     private final AtomicLong ids = new AtomicLong(1);
+    /** Optional DB authenticator (CSAlogin); null = accept any valid-format login. */
+    private csa.db.DbAuth dbAuth;
 
     /** Connection session state. */
     public static final class Session {
@@ -140,6 +142,27 @@ public final class LssGateway {
         if (!LoginHandshake.isValidMacToken(mac)) {
             return LoginResponses.clientLogin("由于你的版本过旧，请更新后再进入游戏！", cdkey);
         }
+        if (dbAuth != null) {
+            String err = dbAuth.authenticate(cdkey, pass);
+            if (err != null) {
+                String msg;
+                switch (err) {
+                    case "not_registered":
+                        msg = LoginHandshake.ERR_NOT_REGISTERED;
+                        break;
+                    case "bad_password":
+                        msg = LoginHandshake.ERR_BAD_PASSWORD;
+                        break;
+                    case "locked_account":
+                        msg = LoginHandshake.ERR_LOCKED_ACCOUNT;
+                        break;
+                    default:
+                        msg = err.startsWith("locked_ip") ? LoginHandshake.ERR_LOCKED_IP : err;
+                        break;
+                }
+                return LoginResponses.clientLogin(msg, cdkey);
+            }
+        }
         s.cdkey = cdkey;
         s.password = pass;
         s.macToken = mac;
@@ -170,6 +193,11 @@ public final class LssGateway {
         s.charName = name;
         s.state = LoginHandshake.LoginState.CHAR_LOGIN;
         return LoginResponses.charLogin(LoginHandshake.OK, name, s.cdkey);
+    }
+
+    /** Attach CSAlogin authenticator (optional). */
+    public void setDbAuth(csa.db.DbAuth auth) {
+        this.dbAuth = auth;
     }
 
     String encode(long id, String cmd, Object... args) {
