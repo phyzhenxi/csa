@@ -1,0 +1,43 @@
+﻿{
+  "feature": "P0-b command signatures",
+  "source": "gmsvjt lssproto_*_recv/_send",
+  "gates": {
+    "isCLI": "CONNECT_isCLI / 0x8080680",
+    "isLOGIN": "0x80804A0",
+    "charaindex": "CONNECT_getCharaindex 0x80813A0",
+    "battle_flag": "WorkInt 0x47 == 0",
+    "street_vendor": "WorkInt 0x137 == -1",
+    "string_check": "checkStringErr 0x808D620"
+  },
+  "commands": [
+    {"cmd": "W", "recv_va": "0x8093400", "recv_size": 441, "args": ["x:int", "y:int", "dir:int"], "desc": "walk"},
+    {"cmd": "W2", "recv_va": "0x8092EF0", "recv_size": 1292, "args": ["x:int", "y:int", "dir:int"], "desc": "walk extended"},
+    {"cmd": "C", "recv_va": "0x8091780", "recv_size": 182, "args": ["data:string"], "desc": "talk/window"},
+    {"cmd": "B", "recv_va": "0x80904F0", "recv_size": 134, "args": ["action:int"], "desc": "battle command"},
+    {"cmd": "M", "recv_va": "0x808CE20", "recv_size": 57, "args": [], "desc": "map/status"},
+    {"cmd": "S", "recv_va": "0x8091730", "recv_size": 74, "args": ["data:string"], "desc": "status"},
+    {"cmd": "D", "recv_va": null, "args": ["data:string"], "desc": "item/drop"},
+    {"cmd": "I", "recv_va": null, "args": ["data:string"], "desc": "item interact"},
+    {"cmd": "L", "recv_va": "0x8091C60", "recv_size": 80, "args": ["data:string"], "desc": "land/env"},
+    {"cmd": "MSG", "recv_va": "0x8091E20", "recv_size": 107, "args": ["a:int", "b:int", "data:string"], "desc": "message"},
+    {"cmd": "TK", "recv_va": "0x8091840", "recv_size": 1042, "args": ["data:string"], "desc": "chat (mute/level gate)"},
+    {"cmd": "TD", "recv_va": "0x808EA00", "recv_size": 162, "args": ["data:string"], "desc": "trade"},
+    {"cmd": "WN", "recv_va": "0x808F440", "recv_size": 1337, "args": ["seqno:int", "objindex:int", "select:int", "data:string"], "max_data": 2048},
+    {"cmd": "PR", "recv_va": "0x8090040", "recv_size": 610, "args": ["x:int", "y:int"], "desc": "party"},
+    {"cmd": "PS", "recv_va": "0x808EBE0", "recv_size": 225, "args": ["a:int", "b:int", "c:int", "d:int", "e:int"]},
+    {"cmd": "FS", "recv_va": "0x80902B0", "recv_size": 576, "args": ["flags:int"], "desc": "bitfield feature switches"},
+    {"cmd": "FM", "recv_va": "0x808E940", "recv_size": 188, "args": ["data:string"], "desc": "family"},
+    {"cmd": "EN", "recv_va": "0x80910B0", "recv_size": 206, "args": ["x:int", "y:int"]},
+    {"cmd": "KN", "recv_va": "0x808F980", "recv_size": 215, "args": ["petname:string"], "max_len": 16},
+    {"cmd": "ClientLogin", "recv_va": "0x8094200", "recv_size": 641, "args": ["cdkey:string", "password:string", "mac:string", "servid:int"]},
+    {"cmd": "CharList", "recv_va": "0x8093600", "recv_size": 687, "args": []},
+    {"cmd": "CharLogin", "recv_va": "0x80940E0", "recv_size": 285, "args": ["charname:string"]},
+    {"cmd": "CreateNewChar", "recv_va": "0x80944D0", "recv_size": 1437, "args": ["name:string", "..."]}
+  ],
+  "send_encode": {
+    "note": "most *_send use util_SendMesg envelope (see login-handshake.json)",
+    "util_mkstring_users": ["C","M","S","B","D","I","FM","TD","TK","WN","MSG","ClientLogin","CharList","CharLogin","CreateNewChar","CharLogout"]
+  },
+  "work_ids": {"battle": 71, "street_vendor": 311, "xy": [5, 6]},
+  "errors": ["讯号错误。", " NU-Err ", "改封包!禁止组队区域", "宠物名中请不要带有非法字符！", "摆摊状态下不能交易"]
+}
