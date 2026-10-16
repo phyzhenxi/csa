@@ -68,3 +68,12 @@ $env:PYTHONPATH = "E:\tools\pylibs"
 1. 先做 P0-a/P0-b，打通登录进游戏  
 2. P1 存档与伤害对拍  
 3. 再铺 Java 域服务（Netty 网关 + 战斗 + 账号）
+
+## Java 模块
+
+- `csa.net.lssp` 协议 codec
+- `csa.net.login` 登录契约
+- `csa.net.cmd` 命令表
+- `csa.save` 角色存档
+- `csa.battle` 伤害计算
+- `csa.gateway` 网关骨架（登录→命令）
