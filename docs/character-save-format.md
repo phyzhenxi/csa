@@ -95,3 +95,18 @@ CharacterSave
 
 道具字段表 40 项（`id,bi,tg,dib,upin,dmce,...,forname`），结构 16 字节记录 `name_ptr, pad, index, pad` @ `0x832FDA0`。  
 宠物 int 字段沿用角色 289 名，但分隔符是 **`:`** 而非 `=`。
+
+
+---
+
+## 全量存档文件存储（CharSaveStore）
+
+`java/src/main/java/csa/db/CharSaveStore.java` 为 CharLogin 交付全量 save 文本（文件存储，无需 ALTER 表）：
+
+| 项 | 路径 / API |
+|----|-----------|
+| 存档 | `data/saves/{cdkey}/{saveIndex}.save`（UTF-8，`CharacterSaveCodec.encode` 文本） |
+| 元数据 | `data/saves/{cdkey}/{saveIndex}.save.json`（name / level / bytes / savedAt） |
+| API | `save(cdkey, saveIndex, saveText)` · `load(cdkey, saveIndex)` → String · `list(cdkey)` → `List<Integer>` |
+
+自测：`CharSaveStoreSelfTest` → **CHARSAVE STORE PASS**（user1/0，lv=120，name=勇者A round-trip）。

@@ -121,3 +121,17 @@ BATTLE_DamageSubCale @ 0x8220D25
 - 四个 resist 打包字段的精确 WorkInt 编号（0x65x 族）
 
 **下一步对拍**：用真实战斗日志/客户端伤害数字校准 `ratioDamage` 分支系数。
+
+## BattleService
+
+`java/src/main/java/csa/battle/BattleService.java` — B 命令动作分发（自测 **BATTLE SERVICE PASS**）。
+
+| action | 含义 | 伤害 | replyToken |
+|--------|------|------|------------|
+| 1 | attack | `DamageCalculator.calc` 全额 | `B 1` |
+| 2 | skill | 同流水线，`attrRatio=1.5` | `B 2` |
+| 3 | defend | calc 后 `/2` | `B 3` |
+| else | unknown | 0 | `ERR` |
+
+- 双方 `DamageCalculator.Fighter` 可注入；`Random` 可注种子（自测确定性）。
+- `BattleResult {damage, critical, replyToken}`；`critical` 为 10% 暴击 roll。

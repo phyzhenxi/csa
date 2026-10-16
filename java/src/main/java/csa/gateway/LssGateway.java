@@ -35,6 +35,9 @@ public final class LssGateway {
     /** Optional DB authenticator (CSAlogin); null = accept any valid-format login. */
     private csa.db.DbAuth dbAuth;
     private csa.db.DbCharacters dbChars;
+    private csa.db.CharSaveStore saveStore;
+    
+    private csa.battle.BattleService battleService;
 
     /** Connection session state. */
     public static final class Session {
@@ -62,15 +65,25 @@ public final class LssGateway {
     public LssGateway() {
         handlers.put(csa.net.cmd.Commands.W, (s, f) -> {
             if (f.tokens.size() >= 3) {
-                s.x = (int) LssProtocolCodec.demInt(f.tokens.get(0));
-                s.y = (int) LssProtocolCodec.demInt(f.tokens.get(1));
-                s.dir = (int) LssProtocolCodec.demInt(f.tokens.get(2));
+                int nx = (int) LssProtocolCodec.demInt(f.tokens.get(0));
+                int ny = (int) LssProtocolCodec.demInt(f.tokens.get(1));
+                int nd = (int) LssProtocolCodec.demInt(f.tokens.get(2));
+                csa.map.WalkService.Pos p = csa.map.WalkService.applyMove(s.x, s.y, nx, ny, nd);
+                if (p != null) {
+                    s.x = p.x;
+                    s.y = p.y;
+                    s.dir = p.dir;
+                }
             }
-            return List.of(); // broadcast via game service in real impl
+            return List.of();
         });
         handlers.put(csa.net.cmd.Commands.C, (s, f) -> List.of("P", f.tokens.isEmpty() ? "" : LssProtocolCodec.demString(f.tokens.get(0))));
         handlers.put(csa.net.cmd.Commands.B, (s, f) -> {
-            long action = f.tokens.isEmpty() ? 0 : LssProtocolCodec.demInt(f.tokens.get(0));
+            int action = f.tokens.isEmpty() ? 0 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            if (battleService != null) {
+                csa.battle.BattleService.BattleResult r = battleService.onAction(action);
+                return List.of("B", r.replyToken.equals("ERR") ? -1 : r.damage);
+            }
             return List.of("B", action);
         });
         handlers.put(csa.net.cmd.Commands.TK, (s, f) -> {
@@ -197,7 +210,21 @@ public final class LssGateway {
         }
         s.charName = name;
         s.state = LoginHandshake.LoginState.CHAR_LOGIN;
-        return LoginResponses.charLogin(LoginHandshake.OK, name, s.cdkey);
+        String savePayload = "";
+        if (saveStore != null) {
+            try {
+                java.util.List<Integer> idxs = saveStore.list(s.cdkey);
+                if (!idxs.isEmpty()) {
+                    savePayload = saveStore.load(s.cdkey, idxs.get(0));
+                    if (savePayload == null) savePayload = "";
+                }
+            } catch (Exception ignored) {
+            }
+        }
+        if (savePayload.isEmpty()) {
+            savePayload = name; // minimal fallback
+        }
+        return LoginResponses.charLogin(LoginHandshake.OK, savePayload, s.cdkey);
     }
 
     /** Attach CSAlogin authenticator (optional). */
@@ -208,6 +235,16 @@ public final class LssGateway {
     /** Attach CSAinfo character repository (optional). */
     public void setDbCharacters(csa.db.DbCharacters chars) {
         this.dbChars = chars;
+    }
+
+    /** Attach file-backed full-save store (optional). */
+    public void setSaveStore(csa.db.CharSaveStore store) {
+        this.saveStore = store;
+    }
+
+    /** Attach battle service (optional). */
+    public void setBattleService(csa.battle.BattleService svc) {
+        this.battleService = svc;
     }
 
     String encode(long id, String cmd, Object... args) {

@@ -91,3 +91,18 @@ record Frame(long id, Cmd cmd, List<Object> args) {}
 // 每命令一个 decode(args) → domain event
 // 门禁：state.isCLI && !inBattle && !streetVendor && checkStringErr
 ```
+
+## W / W2 行走校验（WalkService）
+
+Java 实现：`java/src/main/java/csa/map/WalkService.java`（自测 `WalkServiceSelfTest`）。
+
+| 项 | 规则 |
+|----|------|
+| 参数 | `x, y, dir`（线上 base62 int；见 `data/command-signatures.json`） |
+| 合法步 | 同格（原地转向）或 8 方向步进 1 格（Chebyshev ≤ 1） |
+| 跳跃 | 位移 > 2 格直接拒绝（`ERR_JUMP_TOO_FAR`）；恰好 2 格非单步 → `ERR_ILLEGAL_STEP` |
+| 门禁 | 与其它 recv 相同：非战斗 `WorkInt 0x47==0`、非摆摊 `0x137==-1` |
+| apply | `applyMove` 返回新 `{x,y,dir}`，由调用方写回 Session / Domain |
+| 地图 | `isWalkable(floor,x,y)` 默认 true；TODO 加载 `嘟嘟石器客户端/map`、`data/battleMap` 的 `.map` |
+
+自测输出：`WALK SERVICE PASS`

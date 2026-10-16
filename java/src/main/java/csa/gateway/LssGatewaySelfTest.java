@@ -38,10 +38,10 @@ public final class LssGatewaySelfTest {
         fail += ok("state_char", s.state == csa.net.login.LoginHandshake.LoginState.CHAR_LOGIN);
 
         // 6. walk after in-game
-        List<String> rw = gw.dispatch(s, LssGateway.line(4, "W", 100, 200, 1).trim());
+        List<String> rw = gw.dispatch(s, LssGateway.line(4, "W", 1, 1, 1).trim());
         fail += eq("walk_no_reply", 0, rw.size());
-        fail += eq("walk_x", 100, s.x);
-        fail += eq("walk_y", 200, s.y);
+        fail += eq("walk_x", 1, s.x);
+        fail += eq("walk_y", 1, s.y);
 
         // 7. chat
         List<String> rt = gw.dispatch(s, LssGateway.line(5, "C", "hello world").trim());

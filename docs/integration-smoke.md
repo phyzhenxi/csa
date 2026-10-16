@@ -82,3 +82,15 @@ user1 chars: 1
 S1 CharList => &;103...;#;   (含角色摘要)
 SIM SCENARIOS PASS
 ```
+
+---
+
+## 三服务并行集成（CharSaveStore + WalkService + BattleService）
+
+| 服务 | 自测 | 网关接入 |
+|------|------|----------|
+| CharSaveStore | CHARSAVE STORE PASS | CharLogin 下发全量存档 |
+| WalkService | WALK SERVICE PASS | W 逐步校验（禁大跳） |
+| BattleService | BATTLE SERVICE PASS | B action→damage |
+
+全量回归 10/10 PASS；SimScenarios 通过（CharLogin 返回长信封）。
