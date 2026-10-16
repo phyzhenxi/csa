@@ -60,3 +60,17 @@ sa_9061.exe updated windowmode realbin:138 adrnbin:138 spradrnbin:116 sprbin:116
 - 端口默认 **1234**（`setup.cf`）；若客户端连不上，抓包看实际端口
 - `LONGZORO.DLL` 可能还做登录域名校验；hosts 劫持后一般即可
 - 恢复：从 hosts 删掉 `127.0.0.1 www.longzoro.com`
+
+---
+
+## 登录后服务器列表
+
+客户端在账号登录后显示「服务器1 / 测试服务器2」。列表由**登录响应下发**，客户端二进制内无写死名称。
+
+网关 `ClientLogin` 成功后追加 `LoginResponses.serverList`：
+
+```text
+server1|127.0.0.1|1234;server2|127.0.0.1|1234
+```
+
+两项均指向本地网关。若真实客户端解析格式不同，以抓包为准校准 `serverList()`。

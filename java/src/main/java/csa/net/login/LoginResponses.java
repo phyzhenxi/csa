@@ -70,4 +70,27 @@ public final class LoginResponses {
     public static String charLogout(String status, String data, String cdkey) {
         return twoString(CODE_CHAR_LOGOUT, status, data, cdkey);
     }
+
+    /**
+     * Game-server selection list sent after successful ClientLogin.
+     * Two entries, both local gateway (calibration point for real client).
+     * Encoded as packed string: name|host|port;name|host|port
+     */
+    public static final String DEFAULT_HOST = "127.0.0.1";
+    public static final int DEFAULT_PORT = 1234;
+
+    public static String serverList(String cdkey) {
+        String a = "server1|" + DEFAULT_HOST + "|" + DEFAULT_PORT;
+        String b = "server2|" + DEFAULT_HOST + "|" + DEFAULT_PORT;
+        String packed = a + ";" + b;
+        // reuse two-string envelope so client can parse a list payload
+        return twoString(CODE_CHAR_LIST, String.valueOf(2), packed, cdkey);
+    }
+
+    /** Alternate: include server list inside ClientLogin result payload. */
+    public static String clientLoginWithServers(String result, String cdkey) {
+        String servers = "server1|" + DEFAULT_HOST + "|" + DEFAULT_PORT
+                + ";server2|" + DEFAULT_HOST + "|" + DEFAULT_PORT;
+        return clientLogin(result + "|" + servers, cdkey);
+    }
 }

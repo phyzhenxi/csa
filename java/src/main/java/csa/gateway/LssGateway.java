@@ -233,7 +233,12 @@ public final class LssGateway {
         List<String> out = new ArrayList<>();
         switch (f.command) {
             case csa.net.cmd.Commands.CLIENT_LOGIN:
-                out.add(login(s, f));
+                String loginReply = login(s, f);
+                out.add(loginReply);
+                // after successful login, push game-server list (local gateway)
+                if (s.state == LoginHandshake.LoginState.WHILE_LOGIN) {
+                    out.add(LoginResponses.serverList(s.cdkey));
+                }
                 break;
             case csa.net.cmd.Commands.CHAR_LIST:
                 out.add(charList(s, f));

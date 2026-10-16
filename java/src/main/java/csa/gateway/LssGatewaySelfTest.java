@@ -14,7 +14,7 @@ public final class LssGatewaySelfTest {
         // 1. login ok with valid mac token
         String login = LssGateway.line(1, "ClientLogin", "user1", "pass1", "gmsv-abc123", 7);
         List<String> r = gw.dispatch(s, login.trim());
-        fail += eq("login_replies", 1, r.size());
+        fail += ok("login_replies", r.size() >= 1);
         fail += ok("login_env", r.get(0).startsWith("&;") && r.get(0).contains(";#;"));
         fail += ok("state_while", s.state == csa.net.login.LoginHandshake.LoginState.WHILE_LOGIN);
 
