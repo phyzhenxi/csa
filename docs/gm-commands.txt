@@ -1,0 +1,170 @@
+╭⌒╮┅~ ¤　 ╭⌒╮ ╭⌒╮
+╭⌒╭⌒╮╭⌒╮～╭⌒╮︶︶,　︶︶
+,︶︶︶︶,''︶~~ ,''~︶︶　 ,''
+╬　╱◥███◣╬╬╬╬╬╬╬╬╬╬╬╬
+╬ ︱田︱田 田 ︱　　　　　　　　　   ╬
+
+※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+
+用法:登陆GM帐号后在游戏中输入"[gm 指令 ]",中括号也要打,gm不是帐号密码，是setup.cf里设置的gm.
+--
+[gm changeask 帐号 宠证id 0/1] 猎宠用的宠证id不清楚无法试
+[gm fsize ] GM说话字体大小 格式[gm 密码 fsize 大小]
+[gm supersend floor x y 格数 无/要说的话]晕了～这个应该是范围传送，我怎么输入都是格数不正确 floor=地图
+[gm newsend floor x y 帐号 无/要说的话] 指定账号传送，后面说的话是用系统显示的 floor=地图
+[gm getyou 格数 1~3]查看周围人物的账号
+[gm fmfreetime 帐号 人物名称] 不明、按字面上看应该是免费的时间
+[gm itemaddexp ]查看智慧果的时间和效果还有分数（？）。后面可以加人物名称。不加是查看自己的。
+[gm skywalker ]天行者模式（可以穿图，应该是GM看地图错误用的）后面要加on或者off
+[gm itemreload ]服务端重新读取物品列表，这就不用重启服务器了。如果服务器内存太小不建议使用。容易有假死的现象出现
+[gm missionreload ]重新读取使者任务列表
+[gm angelcreate ]创建精灵召唤指令 格式:[gm 密码 angelcreate 使者账号 勇者账号 任务编号]
+[gm angelclean ]清除精灵召唤任务，后面加任务编号 格式格式[gm 密码 angelclean 任务编号]
+[gm angelinfo ]查看精灵召唤任务列表
+[gm set_schedule_time ]应该是设定庄园的挑战时间也可能是占领时间，但是我的找不到NPC无法试验id=1～9 MM=时间
+格式：[gm set_schedule_time 庄园ID(1~9) 时间（分）
+[gm set_manor_owner ]把庄园给某个家族 格式：格式：[gm 密码 set_manor_owner 庄园ID(1~9) 使用旗标(0:名称 1：ID）注ID可以看家族的列表第一个家族就是1 家族名称或者ID]
+[gm set_momentum ] 设定玩家气势 格式[gm 密码 set_momentum 玩家名称 气势值（注99999=999）]
+[gm samecode ]不明。怎么设定都是参数错误
+[gm set_regist ]设定火，水，电的抗性（注不是魔法是抗性）格式:[gm 密码 set_regist 火数值 水数值 电数值]如果不分开设置的话就是全部比如[gm 密码 set_regist 数值]这样就是全部抗性都是你设定的了
+[gm profession ]设定职业的具体格式不清除，什么都不输入就是查看
+[gm showMem 无]好像是查看服务器内存的使用情况
+[gm setTox ]不明。用了后服务器有显示。没看懂是什么
+[gm setDuck ]不明用了服务器本地都没显示
+[gm crash ]不明用了服务器本地都没显示
+[gm setgamblenum ]设定个人游乐场积分的 后面跟数值
+[gm checktime ]查看服务器的时间（不是运行的。是服务器本地的时间）
+[gm create_pet ]不明。应该是跟宠物有关系的.格式无意中发现
+[gm 密码 create_pet X Y]用后显示
+CREAT[gm X Y} LV=0\cnum=0
+CRETA Start!!
+OK!
+[gm delsk ]删除技能 后面跟ID(1~72)
+[gm addsk ]添加技能 后面跟ID(1~72)
+[gm dropmyitem 道具编号/(0/1)] 把东西刷在地面上。有36样。跟0是刷你打的道具编号。跟1是从你打的道具编号开始到后面的第35位
+格式[gm 密码 dropmyitem 道具编号 0或者1]
+[gm dropmypet 宠物编号]丢出36个宠物
+[gm insidedepotpet ]把身上的宠物存进仓库，必须先用一次仓库
+[gm showdepotpet ]不知道有什么用处，用了后服务器那边显示你仓库里面的宠物
+[gm insertdpet ]不知道有什么用处。用了后显示读取错误
+[gm savedpet ]不知道有什么用处。用了后显示储存失败
+[gm insidedepot ]不知道有什么用处。用了后显示尚未取得仓库
+[gm insidedepotpet ]不知道有什么用处。用了后显示尚未取得仓库
+[gm showdepot ]不知道有什么用处。用了后显示尚未取得仓库
+[gm showdepotpet ]不知道有什么用处。用了后显示尚未取得仓库
+[gm insertditem ]不知道有什么用处。用了后显示读取失败
+[gm saveditem ]不知道有什么用处。用了后显示储存失败
+[gm fixfmdata ]修改家族用的 格式[gm 密码 fixfmdata   ]具体的不清除。cmd和data要输入什么。
+[gm fixfmpk ]也是修改家族的。好像是挑战时间还是什么不清楚
+[gm fixfmleader 帐号 1]好像是修改族长用的。具体不清楚。我把自己的账号输入后成功了但是不知道有什么作用。家族守护兽不见了
+[gm manorpk allpeace/peace 庄园编号]修改庄园用的具体作用不清楚
+[gm gold 数量]改钱的
+[gm petmake 宠物ID]增加宠物的
+[gm additem (数量) 道具ID]增加道具的
+[gm delpet all/位置]删除宠物的（注：all全部 位置1-5）
+[gm delitem all/位置]删除道具的（注：all全部 位置1-5）
+[gm shutdown ]停止服务器用的。*～
+[gm unlockserver 无]不明。后面要加东西。不加显示参数错误。
+[gm shutupall 无]不明。用了什么都没显示。服务器和本地都没
+[gm playerspread waei]用了后在服务器显示所有人物所在地区
+[gm eventsetnow all/旗标 帐号 人物名]设定人物任务重新开始。all全部
+[gm eventsetend all/旗标 帐号 人物名]设定人物所做的任务。all全部。
+[gm eventclean all/旗标 帐号 人物名]清除人物任务。all全部
+[gm unlock 帐号]踢人被踢的显示（因为所做坏事而断线）
+[gm unlockserver 无]不明。后面要加东西。不加显示参数错误。
+[gm silent 帐号 分钟]禁言和解除禁言（解除就打0分钟）
+[gm sendeffect ]不明。用了什么都没显示。服务器和本地都没
+[gm watchevent 无]显示人物完成的任务。后面加账号显示。不加显示自己的
+[gm noenemy on/off]不遇敌
+[gm send floor x y 帐号]传送 floor=地图
+[gm sendeffect ]不明。用了什么都没显示。服务器和本地都没
+[gm newsend floor x y 帐号 无/要说的话]指定账号传送，后面说的话是用系统显示的 floor=地图
+[gm supersend floor x y 格数 无/要说的话]晕了～这个应该是范围传送，我怎么输入都是格数不正确 
+[gm jail 帐号]把人送进监狱
+[gm waeikickall 无]把所有人踢下线。包括GM好处就是不会回档
+[gm waeikick 帐号]踢人。全服显示猪猪猪猪猪猪。。。。
+[gm reset enemy/encount/magic/warppoint/petskill/pettalk/all]
+[gm warp floor x y]传送自己floor=地图
+[gm getuser 人物名 地图号 (npc)]输入后有你输入的人的账号和现在在用的人。还有地图
+[gm battlewatch 无]我猜好像是看战斗的。没部分三开
+[gm battleout 无]停止PK,战斗终止
+[gm battlein 无]没效果。我想也是跟PK有关系
+[gm gmkick 帐号 LSLOCK/KICK/DEUNLOCK/UNLOCKALL/LOCK/TYPE/UNLOCK]
+LSLOCK不明 KICK踢下线 DEUNLOCK不明 UNLOCKALL全部解锁
+LOCK锁定 TYPE列出用户状态 UNLOCK解锁
+不明的应该是在其他服务器也锁。我只有单机的不好试,其他的锁本服的
+[gm shutup 帐号 ON/OFF]封嘴（注意不是禁言）是无时间限制的。ON=封OFF=开
+[gm shutupall 无]不明。用了什么都没显示。服务器和本地都没
+[gm checklock 帐号]不清除。应该是锁定账号什么的。但是没效果。用了后显示XX is locked on localhost
+[gm metamo 变身图号]改变GM形象的
+[gm debug 密码 debug on/off]出错模式。没什么作用
+[gm checktrade waei]不明。用了什么都没显示。服务器和本地都没
+[gm waeikickall 无]把所有人踢下线。包括GM好处就是不会回档
+[gm gmreload all/cdkey level]设定GM的等级，不用进去服务器改了。去服务器改了后也可以用这个马上重新读取而且不用重启。格式[gm 密码 gmreload all（全部重新读取）或者 cdkey=账号 level=等级(可以改1-3)]
+[gm cleanfreepet 无]清除丢在地面上的宠物
+[gm enemyrestart 无]重新读取资料。
+[gm reloadmsip address port]不明。用了后出现address PORT:0
+[gm clean_floor 地图号]清除地图上面的所有东西
+[gm reset enemy/encount/magic/warppoint/petskill/pettalk/all]
+[gm remserver on/off]不清除，on出现Connect FAIL off出现Connect Not Be LINK
+[gm effect alloff/地图号 特效] 地图特效。下雪。下。。。什么的。
+[gm sendeffect ]不明。用了什么都没显示。服务器和本地都没
+[gm sysinfo 无]查看系统详细信息用的。注意容易服务器假死。多等会就行。不是时间和运行时间而且是十分详细的信息
+[gm loginannounce 字串]设定登入时候的公告用的格式格式[gm 密码 loginannounce clear( 清除）/ add 要添加什么就打什么/send查看]
+[gm sequence 数字]设定顺序作用不明
+[gm arrange 数字]设定格档作用不明
+[gm dp 数字]设定GM的DP
+[gm savedpet ]不知道有什么用处。用了后显示储存失败
+[gm insertdpet ]不知道有什么用处。用了后显示读取失败
+[gm superman 无]超人。。80级的也叫超人。。。。
+[gm luck 数字]设定GM的幸运
+[gm vital 数字*100]设定GM的体力
+[gm tgh 数字*100]设定GM的耐力
+[gm dex 数字*100]设定GM的敏捷
+[gm itemaddexp ]查看智慧果的时间和效果还有分数（？）。后面可以加人物名称。不加是查看自己的
+[gm str 数字*100]设定GM的力量
+[gm setmp 数字]设置MP最大值。最大1000
+[gm showtemp waei]不明。用了什么都没显示。服务器和本地都没
+[gm mp 数字]设置MP（不是最大值）
+[gm setmp 数字]设置MP最大值。最大1000
+[gm fixfmpk ][gm fixfmpk ]也是修改家族的。好像是挑战时间还是什么不清楚
+[gm hp 数字]设定GM的HP
+[gm exp 数字]设定GM的经验
+[gm itemaddexp ]查看智慧果的时间和效果还有分数（？）。后面可以加人物名称。不加是查看自己的
+[gm settrans 数字]不明。用了什么都没显示。服务器和本地都没
+[gm petlevelup ]宠物升级。具体的不清楚。昨天试验了下可以改今天又不可以了。日～
+[gm level 数字]更改GM的等级
+[gm gmreload all/cdkey level]设定GM的等级，不用进去服务器改了。去服务器改了后也可以用这个马上重新读取而且不用重启。格式[gm 密码 gmreload all（全部重新读取）或者 cdkey=账号 level=等级(可以改1-3)]
+[gm info 数字]可以查看人物的详细资料后面的数字可以查看其他玩家的
+[gm sysinfo 无]查看系统详细信息用的。注意容易服务器假死。多等会就行。不是时间和运行时间而且是十分详细的信息
+[gm angelinfo ]查看精灵召唤任务列表
+[gm set_battle ]不明。用了什么都没显示。服务器和本地都没
+[gm reload_pkteamlist ]不明。用了什么都没显示。服务器和本地都没
+[gm setneguard waei]不明。用了什么都没显示。服务器和本地都没
+[gm showtemp waei]不明。用了什么都没显示。服务器和本地都没
+[gm showtemp waei]不明。用了什么都没显示。服务器和本地都没
+[gm setneguard waei]不明。用了什么都没显示。服务器和本地都没
+[gm waeikickall 无]把所有人踢下线。包括GM好处就是不会回档
+[gm checktrade waei]不明。用了什么都没显示。服务器和本地都没
+[gm waeikick 帐号]踢人。全服显示猪猪猪猪猪猪。。。。
+[gm playerspread waei]用了后在服务器显示所有人物所在地区
+[gm help 指令/all] 帮助可以查看自己可以用的指令
+[gm petlevelup ]宠物升级。具体的不清楚。昨天试验了下可以改今天又不可以了。日～
+[gm programming_engineer ]不明。
+
+               ╭═══════════════╮
+              ║  ¤╭⌒╮ ╭⌒╮【飓鼎玩】网单 ║
+              ║  ╱◥██◣ ╭╭ ⌒╮欢迎您    ║
+    ╭════┤ ︱田︱田田| ╰--------------   ├════╮
+   ║         ║    http://jdwan.taobao.com/    ║         ║
+   ║         ╰════════════════╯         ║
+  ╱◥█◣^^╪   携起手来，共创美好未来     ● -○-        ║
+ ︱田︱田︱　    我们会做得更好 ！         /█∨█\        ║
+  --------                                  ∏  ∏         ║
+   ║ ╭【飓鼎玩】ぺ 绿色网游单机，最好最实用的网游单机库  ║
+   ║  请支持绿色网游单机 您的支持就是我们无微不至的动力！ ║
+   ║                                                      ║
+   ║                旺旺：kof2511125    QQ:980616434      ║
+   ║  ╔┯╗╔┯╗╔┯╗╔┯╗^^╔┯╗╔┯╗╔┯╗╔┯╗  ║
+   ╰═┠绿┨┠色┨┠网┨┠单┨︱┠惊┨┠喜┨┠无┨┠限┨═╯
+       ╚┷╝╚┷╝╚┷╝╚┷╝\/╚┷╝╚┷╝╚┷╝╚┷╝
