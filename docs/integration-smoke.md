@@ -46,3 +46,25 @@ java -cp out;jars\mysql-connector-j.jar csa.client.GatewayMain 1234
 ```
 
 `CSA_DB_DISABLE=1` 可关掉数据库只测协议。
+
+---
+
+## SimClient 四场景联调（DB 后端）
+
+网关：`GatewayMain 12350` + `DbAuth csa@192.168.2.100/csa`
+
+```text
+S1 login user1/pass1 => &;95...;#;   成功
+S1 CharList / CharLogin / W / C / B  全链路 OK
+S2 bad password     => &;95...;#;   非 ok 长串
+S3 unknown user     => &;95...;#;
+S4 bad mac (eth0)   => &;95...;#;
+SIM SCENARIOS PASS
+```
+
+工具：`csa.client.SimScenarios`
+
+```powershell
+java -cp out;mysql-connector-j.jar csa.client.GatewayMain 12350
+java -cp out;mysql-connector-j.jar csa.client.SimScenarios 127.0.0.1 12350
+```
