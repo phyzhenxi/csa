@@ -1,0 +1,114 @@
+{
+  "source": {
+    "get_attr": "BATTLE_GetAttr @ 0x8217D6E",
+    "attr_adjust": "BATTLE_AttrAdjust @ 0x821D8D7",
+    "single_attr": "0x8217950",
+    "constants": {
+      "advantage_1_5_f32": {
+        "va": "0x82F69D8",
+        "value": 1.5
+      },
+      "disadvantage_0_6_f64": {
+        "va": "0x82BBFA8",
+        "value": 0.6
+      },
+      "half_f32": {
+        "va": "0x82BD544",
+        "value": 0.5
+      },
+      "pct_scale_0_01_f64": {
+        "va": "0x82C2408",
+        "value": 0.01
+      },
+      "score_scale_1e_4_f64": {
+        "va": "0x82C23F0",
+        "value": 0.0001
+      }
+    }
+  },
+  "order": [
+    "earth",
+    "water",
+    "fire",
+    "wind",
+    "none"
+  ],
+  "get_attr": {
+    "work_base": {
+      "earth": "0x450",
+      "water": "0x451",
+      "fire": "0x452",
+      "wind": "0x453"
+    },
+    "work_equip_bonus": {
+      "earth": "0x47C",
+      "water": "0x47D",
+      "fire": "0x47E",
+      "wind": "0x47F"
+    },
+    "clamp_each": [
+      0,
+      100
+    ],
+    "none_formula": "max(0, 100 - sum(earth,water,fire,wind))",
+    "force_mode_work": "0x4CA == 0x7F0",
+    "force_index_work": "0x4CC",
+    "force_value_work": "0x4CD"
+  },
+  "matrix_advantage": {
+    "description": "atk \\ def multiplier; 1.5 = counter, 0.6 = countered, 1.0 = neutral/same",
+    "cycle": "earth > wind > fire > water > earth",
+    "table": {
+      "earth": {
+        "earth": 1.0,
+        "water": 0.6,
+        "fire": 1.0,
+        "wind": 1.5,
+        "none": 1.0
+      },
+      "water": {
+        "earth": 1.5,
+        "water": 1.0,
+        "fire": 0.6,
+        "wind": 1.0,
+        "none": 1.0
+      },
+      "fire": {
+        "earth": 1.0,
+        "water": 1.5,
+        "fire": 1.0,
+        "wind": 0.6,
+        "none": 1.0
+      },
+      "wind": {
+        "earth": 0.6,
+        "water": 1.0,
+        "fire": 1.5,
+        "wind": 1.0,
+        "none": 1.0
+      },
+      "none": {
+        "earth": 1.0,
+        "water": 1.0,
+        "fire": 1.0,
+        "wind": 1.0,
+        "none": 1.0
+      }
+    }
+  },
+  "attr_ratio_pseudocode": "score = sum_i sum_j A[i]*D[j]*M[i][j]; score*=1e-4; ratio = floor(floor(score)/power*1e-4)",
+  "single_attr_multiplier": {
+    "formula": "0.5 + base * def_attr[type] * 0.01 * 0.5  ==  0.5 + base*def_attr/200",
+    "type_map": {
+      "1": "earth",
+      "2": "water",
+      "3": "fire",
+      "4": "wind",
+      "default": "0.5"
+    },
+    "unit_offsets": {
+      "power": "0x98",
+      "attr_type": "0x90"
+    }
+  }
+}

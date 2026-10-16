@@ -1,0 +1,1534 @@
+{
+  "source": {
+    "binary": "E:\\REA\\csa\\csa\\gmsv\\gmsvjt",
+    "sha256": "8436303454217982e12e8c995519343147794a11959b7e19f9048a149c42c543",
+    "int_table_va": "0x8317DBC",
+    "string_table_va": "0x8318260",
+    "serializer": "CHAR_makeStringFromCharData @ 0x80B4EEB",
+    "deserializer": "CHAR_makeCharFromStringToArg @ 0x80B1302"
+  },
+  "wire": {
+    "format": "text key=value lines",
+    "int_fmt": "%s=%d\\n",
+    "string_fmt": "%s=%s\\n",
+    "flag_fmt": "flg%d=%d\\n",
+    "skill_fmt": "skill%d=%s\\n",
+    "item_fmt": "item%d=%s\\n",
+    "poolitem_fmt": "poolitem%d=%s\\n",
+    "title_fmt": "title%d=%d\\n",
+    "adr_fmt": "adr%d=%s\\n",
+    "pet_fmt": "pet%d=%s\\n",
+    "poolpet_fmt": "poolpet%d=%s\\n",
+    "end_fmt": "DATAEND=%d\\n",
+    "buffer_limit": 131072,
+    "string_slot_bytes": 128,
+    "string_base_offset": "0x488",
+    "flag_base_offset": "0xB88",
+    "escape": "makeStringFromEscaped / makeCharFromEscaped"
+  },
+  "int_fields": [
+    {
+      "index": 1,
+      "key": "pn",
+      "group": "core"
+    },
+    {
+      "index": 2,
+      "key": "bi",
+      "group": "core"
+    },
+    {
+      "index": 3,
+      "key": "bbi",
+      "group": "core"
+    },
+    {
+      "index": 4,
+      "key": "fb",
+      "group": "core"
+    },
+    {
+      "index": 5,
+      "key": "fl",
+      "group": "core"
+    },
+    {
+      "index": 6,
+      "key": "x",
+      "group": "core"
+    },
+    {
+      "index": 7,
+      "key": "y",
+      "group": "core"
+    },
+    {
+      "index": 8,
+      "key": "dir",
+      "group": "core"
+    },
+    {
+      "index": 9,
+      "key": "lv",
+      "group": "core"
+    },
+    {
+      "index": 10,
+      "key": "gld",
+      "group": "core"
+    },
+    {
+      "index": 11,
+      "key": "hp",
+      "group": "core"
+    },
+    {
+      "index": 12,
+      "key": "mp",
+      "group": "core"
+    },
+    {
+      "index": 13,
+      "key": "mmp",
+      "group": "core"
+    },
+    {
+      "index": 14,
+      "key": "vi",
+      "group": "core"
+    },
+    {
+      "index": 15,
+      "key": "str",
+      "group": "core"
+    },
+    {
+      "index": 16,
+      "key": "tou",
+      "group": "core"
+    },
+    {
+      "index": 17,
+      "key": "dx",
+      "group": "core"
+    },
+    {
+      "index": 18,
+      "key": "chr",
+      "group": "core"
+    },
+    {
+      "index": 19,
+      "key": "luc",
+      "group": "core"
+    },
+    {
+      "index": 20,
+      "key": "aea",
+      "group": "core"
+    },
+    {
+      "index": 21,
+      "key": "awa",
+      "group": "core"
+    },
+    {
+      "index": 22,
+      "key": "afi",
+      "group": "core"
+    },
+    {
+      "index": 23,
+      "key": "awi",
+      "group": "core"
+    },
+    {
+      "index": 24,
+      "key": "slt",
+      "group": "combat_status"
+    },
+    {
+      "index": 25,
+      "key": "cr",
+      "group": "combat_status"
+    },
+    {
+      "index": 26,
+      "key": "cou",
+      "group": "combat_status"
+    },
+    {
+      "index": 27,
+      "key": "rar",
+      "group": "combat_status"
+    },
+    {
+      "index": 28,
+      "key": "rst",
+      "group": "combat_status"
+    },
+    {
+      "index": 29,
+      "key": "cvo",
+      "group": "combat_status"
+    },
+    {
+      "index": 30,
+      "key": "ml",
+      "group": "combat_status"
+    },
+    {
+      "index": 31,
+      "key": "hl",
+      "group": "combat_status"
+    },
+    {
+      "index": 32,
+      "key": "di",
+      "group": "combat_status"
+    },
+    {
+      "index": 33,
+      "key": "ieqt",
+      "group": "combat_status"
+    },
+    {
+      "index": 34,
+      "key": "poi",
+      "group": "combat_status"
+    },
+    {
+      "index": 35,
+      "key": "par",
+      "group": "combat_status"
+    },
+    {
+      "index": 36,
+      "key": "sil",
+      "group": "combat_status"
+    },
+    {
+      "index": 37,
+      "key": "sto",
+      "group": "combat_status"
+    },
+    {
+      "index": 38,
+      "key": "dar",
+      "group": "combat_status"
+    },
+    {
+      "index": 39,
+      "key": "con",
+      "group": "combat_status"
+    },
+    {
+      "index": 40,
+      "key": "loc",
+      "group": "combat_status"
+    },
+    {
+      "index": 41,
+      "key": "dc",
+      "group": "combat_status"
+    },
+    {
+      "index": 42,
+      "key": "wc",
+      "group": "combat_status"
+    },
+    {
+      "index": 43,
+      "key": "tc",
+      "group": "combat_status"
+    },
+    {
+      "index": 44,
+      "key": "dmc",
+      "group": "combat_status"
+    },
+    {
+      "index": 45,
+      "key": "gpc",
+      "group": "combat_status"
+    },
+    {
+      "index": 46,
+      "key": "kpc",
+      "group": "combat_status"
+    },
+    {
+      "index": 47,
+      "key": "dpc",
+      "group": "combat_status"
+    },
+    {
+      "index": 48,
+      "key": "smc",
+      "group": "combat_status"
+    },
+    {
+      "index": 49,
+      "key": "mic",
+      "group": "combat_status"
+    },
+    {
+      "index": 50,
+      "key": "dbc",
+      "group": "combat_status"
+    },
+    {
+      "index": 51,
+      "key": "dwc",
+      "group": "combat_status"
+    },
+    {
+      "index": 52,
+      "key": "dlc",
+      "group": "combat_status"
+    },
+    {
+      "index": 53,
+      "key": "dswc",
+      "group": "combat_status"
+    },
+    {
+      "index": 54,
+      "key": "dslc",
+      "group": "combat_status"
+    },
+    {
+      "index": 55,
+      "key": "dmswc",
+      "group": "combat_status"
+    },
+    {
+      "index": 56,
+      "key": "wht",
+      "group": "growth"
+    },
+    {
+      "index": 57,
+      "key": "wint",
+      "group": "growth"
+    },
+    {
+      "index": 58,
+      "key": "lint",
+      "group": "growth"
+    },
+    {
+      "index": 59,
+      "key": "exp",
+      "group": "growth"
+    },
+    {
+      "index": 60,
+      "key": "nexp",
+      "group": "growth"
+    },
+    {
+      "index": 61,
+      "key": "lte",
+      "group": "growth"
+    },
+    {
+      "index": 62,
+      "key": "skup",
+      "group": "growth"
+    },
+    {
+      "index": 63,
+      "key": "lvup",
+      "group": "growth"
+    },
+    {
+      "index": 64,
+      "key": "ity",
+      "group": "growth"
+    },
+    {
+      "index": 65,
+      "key": "nc",
+      "group": "events"
+    },
+    {
+      "index": 66,
+      "key": "pnc",
+      "group": "events"
+    },
+    {
+      "index": 67,
+      "key": "llt",
+      "group": "events"
+    },
+    {
+      "index": 68,
+      "key": "duel",
+      "group": "events"
+    },
+    {
+      "index": 69,
+      "key": "evt",
+      "group": "events"
+    },
+    {
+      "index": 70,
+      "key": "evt2",
+      "group": "events"
+    },
+    {
+      "index": 71,
+      "key": "evt3",
+      "group": "events"
+    },
+    {
+      "index": 72,
+      "key": "evt4",
+      "group": "events"
+    },
+    {
+      "index": 73,
+      "key": "evt5",
+      "group": "events"
+    },
+    {
+      "index": 74,
+      "key": "evt6",
+      "group": "events"
+    },
+    {
+      "index": 75,
+      "key": "evt7",
+      "group": "events"
+    },
+    {
+      "index": 76,
+      "key": "evt8",
+      "group": "events"
+    },
+    {
+      "index": 77,
+      "key": "evt9",
+      "group": "events"
+    },
+    {
+      "index": 78,
+      "key": "evt10",
+      "group": "events"
+    },
+    {
+      "index": 79,
+      "key": "evt11",
+      "group": "events"
+    },
+    {
+      "index": 80,
+      "key": "evt12",
+      "group": "events"
+    },
+    {
+      "index": 81,
+      "key": "evt13",
+      "group": "events"
+    },
+    {
+      "index": 82,
+      "key": "evt14",
+      "group": "events"
+    },
+    {
+      "index": 83,
+      "key": "evt15",
+      "group": "events"
+    },
+    {
+      "index": 84,
+      "key": "evt16",
+      "group": "events"
+    },
+    {
+      "index": 85,
+      "key": "evt17",
+      "group": "events"
+    },
+    {
+      "index": 86,
+      "key": "evt18",
+      "group": "events"
+    },
+    {
+      "index": 87,
+      "key": "evt19",
+      "group": "events"
+    },
+    {
+      "index": 88,
+      "key": "evt20",
+      "group": "events"
+    },
+    {
+      "index": 89,
+      "key": "evt21",
+      "group": "events"
+    },
+    {
+      "index": 90,
+      "key": "evt22",
+      "group": "events"
+    },
+    {
+      "index": 91,
+      "key": "evt23",
+      "group": "events"
+    },
+    {
+      "index": 92,
+      "key": "evt24",
+      "group": "events"
+    },
+    {
+      "index": 93,
+      "key": "evt25",
+      "group": "events"
+    },
+    {
+      "index": 94,
+      "key": "evt26",
+      "group": "events"
+    },
+    {
+      "index": 95,
+      "key": "evt27",
+      "group": "events"
+    },
+    {
+      "index": 96,
+      "key": "evt28",
+      "group": "events"
+    },
+    {
+      "index": 97,
+      "key": "evt29",
+      "group": "events"
+    },
+    {
+      "index": 98,
+      "key": "evt30",
+      "group": "events"
+    },
+    {
+      "index": 99,
+      "key": "evt31",
+      "group": "events"
+    },
+    {
+      "index": 100,
+      "key": "evt32",
+      "group": "events"
+    },
+    {
+      "index": 101,
+      "key": "nev",
+      "group": "events"
+    },
+    {
+      "index": 102,
+      "key": "nev2",
+      "group": "events"
+    },
+    {
+      "index": 103,
+      "key": "nev3",
+      "group": "events"
+    },
+    {
+      "index": 104,
+      "key": "nev4",
+      "group": "events"
+    },
+    {
+      "index": 105,
+      "key": "nev5",
+      "group": "events"
+    },
+    {
+      "index": 106,
+      "key": "nev6",
+      "group": "events"
+    },
+    {
+      "index": 107,
+      "key": "nev7",
+      "group": "events"
+    },
+    {
+      "index": 108,
+      "key": "nev8",
+      "group": "events"
+    },
+    {
+      "index": 109,
+      "key": "nev9",
+      "group": "events"
+    },
+    {
+      "index": 110,
+      "key": "nev10",
+      "group": "events"
+    },
+    {
+      "index": 111,
+      "key": "nev11",
+      "group": "events"
+    },
+    {
+      "index": 112,
+      "key": "nev12",
+      "group": "events"
+    },
+    {
+      "index": 113,
+      "key": "nev13",
+      "group": "events"
+    },
+    {
+      "index": 114,
+      "key": "nev14",
+      "group": "events"
+    },
+    {
+      "index": 115,
+      "key": "nev15",
+      "group": "events"
+    },
+    {
+      "index": 116,
+      "key": "nev16",
+      "group": "events"
+    },
+    {
+      "index": 117,
+      "key": "nev17",
+      "group": "events"
+    },
+    {
+      "index": 118,
+      "key": "nev18",
+      "group": "events"
+    },
+    {
+      "index": 119,
+      "key": "nev19",
+      "group": "events"
+    },
+    {
+      "index": 120,
+      "key": "nev20",
+      "group": "events"
+    },
+    {
+      "index": 121,
+      "key": "nev21",
+      "group": "events"
+    },
+    {
+      "index": 122,
+      "key": "nev22",
+      "group": "events"
+    },
+    {
+      "index": 123,
+      "key": "nev23",
+      "group": "events"
+    },
+    {
+      "index": 124,
+      "key": "nev24",
+      "group": "events"
+    },
+    {
+      "index": 125,
+      "key": "nev25",
+      "group": "events"
+    },
+    {
+      "index": 126,
+      "key": "nev26",
+      "group": "events"
+    },
+    {
+      "index": 127,
+      "key": "nev27",
+      "group": "events"
+    },
+    {
+      "index": 128,
+      "key": "nev28",
+      "group": "events"
+    },
+    {
+      "index": 129,
+      "key": "nev29",
+      "group": "events"
+    },
+    {
+      "index": 130,
+      "key": "nev30",
+      "group": "events"
+    },
+    {
+      "index": 131,
+      "key": "nev31",
+      "group": "events"
+    },
+    {
+      "index": 132,
+      "key": "nev32",
+      "group": "events"
+    },
+    {
+      "index": 133,
+      "key": "trn",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 134,
+      "key": "teq",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 135,
+      "key": "ini",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 136,
+      "key": "silent",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 137,
+      "key": "fmi",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 138,
+      "key": "fmlf",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 139,
+      "key": "fmspr",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 140,
+      "key": "bankgld",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 141,
+      "key": "ridepet",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 142,
+      "key": "learnride",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 143,
+      "key": "lowridepet",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 144,
+      "key": "limitlv",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 145,
+      "key": "fusioncode",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 146,
+      "key": "fusionindex",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 147,
+      "key": "fusionraise",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 148,
+      "key": "fusionbe",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 149,
+      "key": "futimelimit",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 150,
+      "key": "fusiontype",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 151,
+      "key": "fame",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 152,
+      "key": "sindex",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 153,
+      "key": "earth_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 154,
+      "key": "water_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 155,
+      "key": "fire_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 156,
+      "key": "wind_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 157,
+      "key": "earth_resist",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 158,
+      "key": "water_resist",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 159,
+      "key": "fire_resist",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 160,
+      "key": "wind_resist",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 161,
+      "key": "earth_attmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 162,
+      "key": "water_attmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 163,
+      "key": "fire_attmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 164,
+      "key": "wind_attmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 165,
+      "key": "earth_defmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 166,
+      "key": "water_defmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 167,
+      "key": "fire_defmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 168,
+      "key": "wind_defmagic_exp",
+      "group": "elemental_fame"
+    },
+    {
+      "index": 169,
+      "key": "personaglod",
+      "group": "extended"
+    },
+    {
+      "index": 170,
+      "key": "gamblenums",
+      "group": "extended"
+    },
+    {
+      "index": 171,
+      "key": "actsty",
+      "group": "extended"
+    },
+    {
+      "index": 172,
+      "key": "evbasevtl",
+      "group": "extended"
+    },
+    {
+      "index": 173,
+      "key": "evbasestr",
+      "group": "extended"
+    },
+    {
+      "index": 174,
+      "key": "evbasetgh",
+      "group": "extended"
+    },
+    {
+      "index": 175,
+      "key": "evbasedex",
+      "group": "extended"
+    },
+    {
+      "index": 176,
+      "key": "fmtimelimit",
+      "group": "extended"
+    },
+    {
+      "index": 177,
+      "key": "profession_class",
+      "group": "extended"
+    },
+    {
+      "index": 178,
+      "key": "profession_level",
+      "group": "extended"
+    },
+    {
+      "index": 179,
+      "key": "profession_skill_point",
+      "group": "extended"
+    },
+    {
+      "index": 180,
+      "key": "attachpile",
+      "group": "extended"
+    },
+    {
+      "index": 181,
+      "key": "profession_fire_p",
+      "group": "extended"
+    },
+    {
+      "index": 182,
+      "key": "profession_ice_p",
+      "group": "extended"
+    },
+    {
+      "index": 183,
+      "key": "profession_thunder_p",
+      "group": "extended"
+    },
+    {
+      "index": 184,
+      "key": "profession_fire_r",
+      "group": "extended"
+    },
+    {
+      "index": 185,
+      "key": "profession_ice_r",
+      "group": "extended"
+    },
+    {
+      "index": 186,
+      "key": "profession_thunder_r",
+      "group": "extended"
+    },
+    {
+      "index": 187,
+      "key": "herofloor",
+      "group": "extended"
+    },
+    {
+      "index": 188,
+      "key": "becomepig",
+      "group": "extended"
+    },
+    {
+      "index": 189,
+      "key": "becomepig_bbi",
+      "group": "extended"
+    },
+    {
+      "index": 190,
+      "key": "leavetime",
+      "group": "extended"
+    },
+    {
+      "index": 191,
+      "key": "momentum",
+      "group": "extended"
+    },
+    {
+      "index": 192,
+      "key": "aexp",
+      "group": "extended"
+    },
+    {
+      "index": 193,
+      "key": "aexpt",
+      "group": "extended"
+    },
+    {
+      "index": 194,
+      "key": "herocnt",
+      "group": "extended"
+    },
+    {
+      "index": 195,
+      "key": "tsf",
+      "group": "extended"
+    },
+    {
+      "index": 196,
+      "key": "memberpoint",
+      "group": "extended"
+    },
+    {
+      "index": 197,
+      "key": "vipride",
+      "group": "extended"
+    },
+    {
+      "index": 198,
+      "key": "viptime",
+      "group": "extended"
+    },
+    {
+      "index": 199,
+      "key": "beatitude",
+      "group": "extended"
+    },
+    {
+      "index": 200,
+      "key": "lowridepet1",
+      "group": "extended"
+    },
+    {
+      "index": 201,
+      "key": "highridepet2",
+      "group": "extended"
+    },
+    {
+      "index": 202,
+      "key": "tc01",
+      "group": "extended"
+    },
+    {
+      "index": 203,
+      "key": "tc02",
+      "group": "extended"
+    },
+    {
+      "index": 204,
+      "key": "tc03",
+      "group": "extended"
+    },
+    {
+      "index": 205,
+      "key": "tc04",
+      "group": "extended"
+    },
+    {
+      "index": 206,
+      "key": "tc05",
+      "group": "extended"
+    },
+    {
+      "index": 207,
+      "key": "tc06",
+      "group": "extended"
+    },
+    {
+      "index": 208,
+      "key": "tc07",
+      "group": "extended"
+    },
+    {
+      "index": 209,
+      "key": "tc08",
+      "group": "extended"
+    },
+    {
+      "index": 210,
+      "key": "tc09",
+      "group": "extended"
+    },
+    {
+      "index": 211,
+      "key": "tc10",
+      "group": "extended"
+    },
+    {
+      "index": 212,
+      "key": "tc11",
+      "group": "extended"
+    },
+    {
+      "index": 213,
+      "key": "tc12",
+      "group": "extended"
+    },
+    {
+      "index": 214,
+      "key": "tc13",
+      "group": "extended"
+    },
+    {
+      "index": 215,
+      "key": "tc14",
+      "group": "extended"
+    },
+    {
+      "index": 216,
+      "key": "tc15",
+      "group": "extended"
+    },
+    {
+      "index": 217,
+      "key": "tc16",
+      "group": "extended"
+    },
+    {
+      "index": 218,
+      "key": "tc17",
+      "group": "extended"
+    },
+    {
+      "index": 219,
+      "key": "tc18",
+      "group": "extended"
+    },
+    {
+      "index": 220,
+      "key": "tc19",
+      "group": "extended"
+    },
+    {
+      "index": 221,
+      "key": "tc20",
+      "group": "extended"
+    },
+    {
+      "index": 222,
+      "key": "tc21",
+      "group": "extended"
+    },
+    {
+      "index": 223,
+      "key": "tc22",
+      "group": "extended"
+    },
+    {
+      "index": 224,
+      "key": "tc23",
+      "group": "extended"
+    },
+    {
+      "index": 225,
+      "key": "tc24",
+      "group": "extended"
+    },
+    {
+      "index": 226,
+      "key": "tc25",
+      "group": "extended"
+    },
+    {
+      "index": 227,
+      "key": "locked",
+      "group": "misc"
+    },
+    {
+      "index": 228,
+      "key": "super",
+      "group": "misc"
+    },
+    {
+      "index": 229,
+      "key": "onlinetime",
+      "group": "misc"
+    },
+    {
+      "index": 230,
+      "key": "cameo",
+      "group": "misc"
+    },
+    {
+      "index": 231,
+      "key": "mt",
+      "group": "misc"
+    },
+    {
+      "index": 232,
+      "key": "mttime",
+      "group": "misc"
+    },
+    {
+      "index": 233,
+      "key": "evolve",
+      "group": "misc"
+    },
+    {
+      "index": 234,
+      "key": "fdt",
+      "group": "misc"
+    },
+    {
+      "index": 235,
+      "key": "active",
+      "group": "misc"
+    },
+    {
+      "index": 236,
+      "key": "titlelv",
+      "group": "misc"
+    },
+    {
+      "index": 237,
+      "key": "titletime",
+      "group": "misc"
+    },
+    {
+      "index": 238,
+      "key": "mtime",
+      "group": "misc"
+    },
+    {
+      "index": 239,
+      "key": "regtime",
+      "group": "misc"
+    },
+    {
+      "index": 240,
+      "key": "regcount",
+      "group": "misc"
+    },
+    {
+      "index": 241,
+      "key": "regoltime",
+      "group": "misc"
+    },
+    {
+      "index": 242,
+      "key": "spcounter",
+      "group": "misc"
+    },
+    {
+      "index": 243,
+      "key": "sptime",
+      "group": "misc"
+    },
+    {
+      "index": 244,
+      "key": "offtime",
+      "group": "misc"
+    },
+    {
+      "index": 245,
+      "key": "fmregtime",
+      "group": "misc"
+    },
+    {
+      "index": 246,
+      "key": "canequip",
+      "group": "misc"
+    },
+    {
+      "index": 247,
+      "key": "tensefield",
+      "group": "misc"
+    },
+    {
+      "index": 248,
+      "key": "luasave_workint_1",
+      "group": "lua"
+    },
+    {
+      "index": 249,
+      "key": "luasave_workint_2",
+      "group": "lua"
+    },
+    {
+      "index": 250,
+      "key": "luasave_workint_3",
+      "group": "lua"
+    },
+    {
+      "index": 251,
+      "key": "luasave_int_1",
+      "group": "lua"
+    },
+    {
+      "index": 252,
+      "key": "luasave_int_2",
+      "group": "lua"
+    },
+    {
+      "index": 253,
+      "key": "luasave_int_3",
+      "group": "lua"
+    },
+    {
+      "index": 254,
+      "key": "npctime",
+      "group": "misc"
+    },
+    {
+      "index": 255,
+      "key": "report",
+      "group": "misc"
+    },
+    {
+      "index": 256,
+      "key": "luasave_int_4",
+      "group": "lua"
+    },
+    {
+      "index": 257,
+      "key": "luasave_int_5",
+      "group": "lua"
+    },
+    {
+      "index": 258,
+      "key": "luasave_int_6",
+      "group": "lua"
+    },
+    {
+      "index": 259,
+      "key": "luasave_int_7",
+      "group": "lua"
+    },
+    {
+      "index": 260,
+      "key": "luasave_int_8",
+      "group": "lua"
+    },
+    {
+      "index": 261,
+      "key": "luasave_int_9",
+      "group": "lua"
+    },
+    {
+      "index": 262,
+      "key": "luasave_int_10",
+      "group": "lua"
+    },
+    {
+      "index": 263,
+      "key": "luasave_int_11",
+      "group": "lua"
+    },
+    {
+      "index": 264,
+      "key": "luasave_int_12",
+      "group": "lua"
+    },
+    {
+      "index": 265,
+      "key": "luasave_int_13",
+      "group": "lua"
+    },
+    {
+      "index": 266,
+      "key": "luasave_int_14",
+      "group": "lua"
+    },
+    {
+      "index": 267,
+      "key": "luasave_int_15",
+      "group": "lua"
+    },
+    {
+      "index": 268,
+      "key": "luasave_int_16",
+      "group": "lua"
+    },
+    {
+      "index": 269,
+      "key": "luasave_int_17",
+      "group": "lua"
+    },
+    {
+      "index": 270,
+      "key": "luasave_int_18",
+      "group": "lua"
+    },
+    {
+      "index": 271,
+      "key": "luasave_int_19",
+      "group": "lua"
+    },
+    {
+      "index": 272,
+      "key": "luasave_int_20",
+      "group": "lua"
+    },
+    {
+      "index": 273,
+      "key": "luasave_int_21",
+      "group": "lua"
+    },
+    {
+      "index": 274,
+      "key": "luasave_int_22",
+      "group": "lua"
+    },
+    {
+      "index": 275,
+      "key": "luasave_int_23",
+      "group": "lua"
+    },
+    {
+      "index": 276,
+      "key": "luasave_int_24",
+      "group": "lua"
+    },
+    {
+      "index": 277,
+      "key": "luasave_int_25",
+      "group": "lua"
+    },
+    {
+      "index": 278,
+      "key": "luasave_int_26",
+      "group": "lua"
+    },
+    {
+      "index": 279,
+      "key": "title_d",
+      "group": "misc"
+    },
+    {
+      "index": 280,
+      "key": "title_1",
+      "group": "misc"
+    },
+    {
+      "index": 281,
+      "key": "title_2",
+      "group": "misc"
+    },
+    {
+      "index": 282,
+      "key": "title_3",
+      "group": "misc"
+    },
+    {
+      "index": 283,
+      "key": "nofame",
+      "group": "misc"
+    },
+    {
+      "index": 284,
+      "key": "yhp",
+      "group": "misc"
+    },
+    {
+      "index": 285,
+      "key": "yatk",
+      "group": "misc"
+    },
+    {
+      "index": 286,
+      "key": "ydef",
+      "group": "misc"
+    },
+    {
+      "index": 287,
+      "key": "yquick",
+      "group": "misc"
+    },
+    {
+      "index": 288,
+      "key": "ylv",
+      "group": "misc"
+    },
+    {
+      "index": 289,
+      "key": "reserverreward",
+      "group": "misc"
+    }
+  ],
+  "string_fields": [
+    {
+      "index": 0,
+      "key": "name"
+    },
+    {
+      "index": 1,
+      "key": "ownt"
+    },
+    {
+      "index": 2,
+      "key": "arg"
+    },
+    {
+      "index": 3,
+      "key": "ocd"
+    },
+    {
+      "index": 4,
+      "key": "ocn"
+    },
+    {
+      "index": 5,
+      "key": "fmname"
+    },
+    {
+      "index": 6,
+      "key": "ucode"
+    },
+    {
+      "index": 7,
+      "key": "tsi"
+    },
+    {
+      "index": 8,
+      "key": "tsn"
+    },
+    {
+      "index": 9,
+      "key": "love"
+    },
+    {
+      "index": 10,
+      "key": "lovrrid"
+    },
+    {
+      "index": 11,
+      "key": "lovrrneme"
+    },
+    {
+      "index": 12,
+      "key": "newname"
+    },
+    {
+      "index": 13,
+      "key": "powerup"
+    }
+  ]
+}
