@@ -45,14 +45,14 @@
 
 > 除此之外 **没有新的、独立的 P0**。saacproto 可复用同一 codec，属 P0-b 的并行子集。
 
-## P1 — 数据与战斗可玩
+## P1 — 数据与战斗可玩（存档/伤害/道具宠物已落地）
 
 | 任务 | 验收 |
 |------|------|
-| 存档 encode/decode Java | 与 `CHAR_makeStringFromCharData` 对拍 289+14 字段 |
+| 存档 encode/decode Java（✅ CharacterSaveCodec） | 与 `CHAR_makeStringFromCharData` 对拍 289+14 字段 |
 | `BATTLE_DamageCalc` 全式 | 黄金用例覆盖暴击/骑宠/百分比分支 |
 | item/pet 嵌套串 | `ITEM_makeStringFromItemData` 等 |
-| `saacproto` 命令参数表 | 账号域完整 |
+| `saacproto` 命令表（✅ SaacCommands） | 账号域完整 |
 
 ## P2 — 玩法与运维
 

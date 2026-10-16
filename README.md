@@ -77,3 +77,7 @@ $env:PYTHONPATH = "E:\tools\pylibs"
 - `csa.save` 角色存档
 - `csa.battle` 伤害计算
 - `csa.gateway` 网关骨架（登录→命令）
+
+- `csa.net.util` 信封 keyed-base64 编码
+- `csa.net.saac` 账号服命令表
+- `csa.model` 领域 DTO
