@@ -27,6 +27,10 @@ public final class GatewayMain {
                 gw.setDbCharacters(new csa.db.DbCharacters(host, dbPort, user, pass, db));
                 gw.setSaveStore(new csa.db.CharSaveStore());
                 gw.setBattleService(new csa.battle.BattleService(42L));
+                csa.game.SkillItemService skills = new csa.game.SkillItemService(42L);
+                skills.seedItem(1001, 5);
+                skills.seedSkill(7, 3);
+                gw.setSkillItemService(skills);
                 gw.setDbAuth(auth);
                 System.out.println("DbAuth enabled: " + user + "@" + host + "/" + db);
             } catch (Exception e) {

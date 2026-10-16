@@ -106,3 +106,14 @@ Java 实现：`java/src/main/java/csa/map/WalkService.java`（自测 `WalkServic
 | 地图 | `isWalkable(floor,x,y)` 默认 true；TODO 加载 `嘟嘟石器客户端/map`、`data/battleMap` 的 `.map` |
 
 自测输出：`WALK SERVICE PASS`
+
+## 地图加载（MapLoader）
+
+Java：`java/src/main/java/csa/map/MapLoader.java`（自测 `MapLoaderSelfTest` → `MAP LOADER PASS`）。
+
+| 格式 | 布局 |
+|------|------|
+| 地图 `map/*.dat`（亦称 `*.MAP`） | `u32le width,height` + 每格 6 字节（3×u16le：图块/物件/标志） |
+| 战斗 `data/battleMap/*.map` | 魔数 `SAB ` + 400× `u16be` 图块（804 字节，按 20×20） |
+
+`MapLoader.load(path) → MapData{width,height,byte[] tiles}`；`isWalkable` 暂定 tile 0 不可走、非 0 可走（TODO 解析真实 walk flag）。`WalkService.registerMap(floor, map)` 注册后 `isWalkable(floor,x,y)` 走 loader，未注册默认可走。

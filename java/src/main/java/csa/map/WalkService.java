@@ -88,17 +88,36 @@ public final class WalkService {
         return new Pos(toX, toY, dir);
     }
 
+    /** floor id → loaded map tiles (via {@link MapLoader}). */
+    private static final java.util.concurrent.ConcurrentHashMap<Integer, MapLoader.MapData> MAPS =
+            new java.util.concurrent.ConcurrentHashMap<>();
+
     /**
-     * Map-file walkability stub — default open.
+     * Register map tiles for a floor (loaded with {@link MapLoader#load}).
+     * Passing {@code null} unregisters.
+     */
+    public static void registerMap(int floor, MapLoader.MapData map) {
+        if (map == null) {
+            MAPS.remove(floor);
+        } else {
+            MAPS.put(floor, map);
+        }
+    }
+
+    /**
+     * Map-file walkability. Default open when no map is registered for the floor.
      *
-     * TODO: load real .map tiles (hook only; do not parse all here):
-     *   E:\REA\csa\嘟嘟石器客户端\map     — client floor maps (*.map)
-     *   data/battleMap                     — battle encounter maps
-     * When loaded, flip blocked cells to false and return {@link #ERR_BLOCKED}
-     * from validateMove / applyMove for those coordinates.
+     * <p>Uses {@link MapLoader#isWalkable} against registered tiles
+     * (floor {@code map/*.dat} / battle {@code data/battleMap/*.map}).
+     * TODO: flip blocked cells to false and return {@link #ERR_BLOCKED}
+     * from validateMove / applyMove once real walk flags are decoded.</p>
      */
     public static boolean isWalkable(int floor, int x, int y) {
-        return true;
+        MapLoader.MapData map = MAPS.get(floor);
+        if (map == null) {
+            return true;
+        }
+        return MapLoader.isWalkable(map, x, y);
     }
 
     private WalkService() {}

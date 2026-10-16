@@ -20,6 +20,9 @@ public final class Commands {
     public static final String FM = "FM";
     public static final String MSG = "MSG";
     public static final String KN = "KN";
+    public static final String I = "I";
+    public static final String PI = "PI";
+    public static final String SKUP = "SKUP";
     public static final String EN = "EN";
     public static final String CLIENT_LOGIN = "ClientLogin";
     public static final String CHAR_LIST = "CharList";

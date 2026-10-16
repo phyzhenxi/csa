@@ -38,6 +38,7 @@ public final class LssGateway {
     private csa.db.CharSaveStore saveStore;
     
     private csa.battle.BattleService battleService;
+    private csa.game.SkillItemService skillItems;
 
     /** Connection session state. */
     public static final class Session {
@@ -92,6 +93,28 @@ public final class LssGateway {
                 return List.of("MSG", "异常字符的用户名");
             }
             return List.of("P", msg);
+        });
+        handlers.put("I", (s, f) -> {
+            if (skillItems == null) return List.of("I", "ERR");
+            int idx = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            return List.of("I", skillItems.useItem(idx));
+        });
+        handlers.put("PI", (s, f) -> {
+            if (skillItems == null) return List.of("I", "ERR");
+            int idx = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            return List.of("I", skillItems.useItem(idx));
+        });
+        handlers.put("PS", (s, f) -> {
+            if (skillItems == null) return List.of("PS", "ERR");
+            int idx = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            int target = f.tokens.size() > 1 ? (int) LssProtocolCodec.demInt(f.tokens.get(1)) : 0;
+            String r = skillItems.useSkill(idx, target);
+            return List.of("PS", r.endsWith("ok") ? skillItems.lastDamage() : -1);
+        });
+        handlers.put("SKUP", (s, f) -> {
+            if (skillItems == null) return List.of("SKUP", "ERR");
+            int idx = f.tokens.isEmpty() ? -1 : (int) LssProtocolCodec.demInt(f.tokens.get(0));
+            return List.of("SKUP", skillItems.skillUp(idx));
         });
     }
 
@@ -245,6 +268,10 @@ public final class LssGateway {
     /** Attach battle service (optional). */
     public void setBattleService(csa.battle.BattleService svc) {
         this.battleService = svc;
+    }
+
+    public void setSkillItemService(csa.game.SkillItemService svc) {
+        this.skillItems = svc;
     }
 
     String encode(long id, String cmd, Object... args) {

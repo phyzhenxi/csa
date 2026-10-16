@@ -94,3 +94,11 @@ SIM SCENARIOS PASS
 | BattleService | BATTLE SERVICE PASS | B action→damage |
 
 全量回归 10/10 PASS；SimScenarios 通过（CharLogin 返回长信封）。
+
+---
+
+## 地图加载 + 技能道具命令
+
+- **MapLoader**：楼层 `.dat` = `u32le w,h` + `w*h*6`（3×u16le/格）；战斗图 `"SAB "` + 400 BE u16
+- **SkillItemService**：`I/PI` 用道具、`PS` 技能、`SKUP` 升级
+- 全量回归 12/12 PASS
