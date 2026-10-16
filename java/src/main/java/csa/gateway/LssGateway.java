@@ -34,6 +34,7 @@ public final class LssGateway {
     private final AtomicLong ids = new AtomicLong(1);
     /** Optional DB authenticator (CSAlogin); null = accept any valid-format login. */
     private csa.db.DbAuth dbAuth;
+    private csa.db.DbCharacters dbChars;
 
     /** Connection session state. */
     public static final class Session {
@@ -175,8 +176,12 @@ public final class LssGateway {
         if (s.state == LoginHandshake.LoginState.NOT_LOGIN) {
             return LoginResponses.charList("failed", "请不要进行非法登陆游戏！", s.cdkey);
         }
-        // stub: empty slot list; real impl packs CharacterSaveCodec summaries
-        return LoginResponses.charList("0", "", s.cdkey);
+        String packed = "";
+        if (dbChars != null) {
+            java.util.List<csa.db.DbCharacters.CharRow> rows = dbChars.listByCdkey(s.cdkey);
+            packed = csa.db.DbCharacters.packList(rows);
+        }
+        return LoginResponses.charList(String.valueOf(packed.isEmpty() ? 0 : 1), packed, s.cdkey);
     }
 
     String charLogin(Session s, LssProtocolCodec.Frame f) {
@@ -198,6 +203,11 @@ public final class LssGateway {
     /** Attach CSAlogin authenticator (optional). */
     public void setDbAuth(csa.db.DbAuth auth) {
         this.dbAuth = auth;
+    }
+
+    /** Attach CSAinfo character repository (optional). */
+    public void setDbCharacters(csa.db.DbCharacters chars) {
+        this.dbChars = chars;
     }
 
     String encode(long id, String cmd, Object... args) {

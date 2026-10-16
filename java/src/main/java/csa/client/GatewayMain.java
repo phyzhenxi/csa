@@ -24,6 +24,8 @@ public final class GatewayMain {
             try {
                 DbAuth auth = new DbAuth(host, dbPort, user, pass, db);
                 gw.setDbAuth(auth);
+                gw.setDbCharacters(new csa.db.DbCharacters(host, dbPort, user, pass, db));
+                gw.setDbAuth(auth);
                 System.out.println("DbAuth enabled: " + user + "@" + host + "/" + db);
             } catch (Exception e) {
                 System.out.println("DbAuth DISABLED (connect fail): " + e.getMessage());

@@ -68,3 +68,17 @@ SIM SCENARIOS PASS
 java -cp out;mysql-connector-j.jar csa.client.GatewayMain 12350
 java -cp out;mysql-connector-j.jar csa.client.SimScenarios 127.0.0.1 12350
 ```
+
+---
+
+## CharList 接入 CSAinfo
+
+`DbCharacters.listByCdkey` + `packList` → `CharList_send` 的 data 参数。
+
+```text
+DB CHARS PASS
+user1 chars: 1
+  勇者A|120|1|1|100|5
+S1 CharList => &;103...;#;   (含角色摘要)
+SIM SCENARIOS PASS
+```
