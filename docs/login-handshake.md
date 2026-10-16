@@ -229,3 +229,26 @@ sprintf(buf, "&;%d%s;#;", funcId, body)
 
 这是私服定制的 **会话编码盐**，Java 侧必须复现。
 
+
+---
+
+## 响应编码补全（LoginResponses）
+
+所有 `*_send` 共用路径：
+
+```text
+key = cdkey + "1234567"
+body = util_mkstring(a) [+ util_mkstring(b)]
+body += util_mkint(srcLen)          // 源串字节长度（校验/对齐）
+wire = "&;{code+0x17}{body};#;"
+```
+
+| 发送 | code | funcId | body |
+|------|------|--------|------|
+| ClientLogin | 0x48 | 95 | `mkstring(result) + mkint(len)` |
+| CharList | 0x50 | 103 | `mkstring(a)+mkstring(b)+mkint(lenA+lenB)` |
+| CharLogin | 0x4E | 101 | 同上 |
+| CreateNewChar | 0x4A | 97 | 同上 |
+| CharLogout | 0x52 | 105 | 同上 |
+
+Java：`csa.net.login.LoginResponses`，网关登录路径已切换到信封编码。

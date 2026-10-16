@@ -15,18 +15,18 @@ public final class LssGatewaySelfTest {
         String login = LssGateway.line(1, "ClientLogin", "user1", "pass1", "gmsv-abc123", 7);
         List<String> r = gw.dispatch(s, login.trim());
         fail += eq("login_replies", 1, r.size());
-        fail += ok("login_ok", r.get(0).contains("ok"));
+        fail += ok("login_env", r.get(0).startsWith("&;") && r.get(0).contains(";#;"));
         fail += ok("state_while", s.state == csa.net.login.LoginHandshake.LoginState.WHILE_LOGIN);
 
         // 2. bad mac
         LssGateway.Session s2 = new LssGateway.Session(2);
         List<String> r2 = gw.dispatch(s2, LssGateway.line(1, "ClientLogin", "u", "p", "eth0", 1).trim());
-        fail += ok("bad_mac", r2.get(0).contains("版本") || r2.get(0).contains("ClientLogin"));
+        fail += ok("bad_mac", r2.get(0).startsWith("&;") && r2.get(0).contains(";#;"));
 
         // 3. empty password
         LssGateway.Session s3 = new LssGateway.Session(3);
         List<String> r3 = gw.dispatch(s3, LssGateway.line(1, "ClientLogin", "u", "", "gmsv-x", 1).trim());
-        fail += ok("empty", r3.get(0).contains("ClientLogin") && s3.state == csa.net.login.LoginHandshake.LoginState.NOT_LOGIN);
+        fail += ok("empty", r3.get(0).startsWith("&;") && s3.state == csa.net.login.LoginHandshake.LoginState.NOT_LOGIN);
 
         // 4. char list after login
         List<String> rl = gw.dispatch(s, LssGateway.line(2, "CharList").trim());
@@ -34,7 +34,7 @@ public final class LssGatewaySelfTest {
 
         // 5. char login
         List<String> rc = gw.dispatch(s, LssGateway.line(3, "CharLogin", "勇者").trim());
-        fail += ok("charlogin_ok", rc.get(0).contains("ok"));
+        fail += ok("charlogin_env", rc.get(0).startsWith("&;") && rc.get(0).contains(";#;"));
         fail += ok("state_char", s.state == csa.net.login.LoginHandshake.LoginState.CHAR_LOGIN);
 
         // 6. walk after in-game

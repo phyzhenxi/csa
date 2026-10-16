@@ -1,6 +1,7 @@
 package csa.gateway;
 
 import csa.net.login.LoginHandshake;
+import csa.net.login.LoginResponses;
 import csa.net.lssp.LssProtocolCodec;
 
 import java.io.BufferedReader;
@@ -120,10 +121,10 @@ public final class LssGateway {
 
     String login(Session s, LssProtocolCodec.Frame f) {
         if (s.state != LoginHandshake.LoginState.NOT_LOGIN) {
-            return encode(f.msgId, "MSG", "the Client had Logined");
+            return LoginResponses.clientLogin("the Client had Logined", s.cdkey);
         }
         if (f.tokens.size() < 3) {
-            return encode(f.msgId, "ClientLogin", LoginHandshake.ERR_EMPTY);
+            return LoginResponses.clientLogin(LoginHandshake.ERR_EMPTY, "");
         }
         String cdkey = LssProtocolCodec.demString(f.tokens.get(0));
         String pass = LssProtocolCodec.demString(f.tokens.get(1));
@@ -131,44 +132,44 @@ public final class LssGateway {
         int servId = f.tokens.size() > 3 ? (int) LssProtocolCodec.demInt(f.tokens.get(3)) : 1;
 
         if (cdkey.isEmpty() || pass.isEmpty()) {
-            return encode(f.msgId, "ClientLogin", LoginHandshake.ERR_EMPTY);
+            return LoginResponses.clientLogin(LoginHandshake.ERR_EMPTY, cdkey);
         }
         if (LoginHandshake.isBadLoginString(cdkey) || LoginHandshake.isBadLoginString(pass)) {
-            return encode(f.msgId, "ClientLogin", LoginHandshake.ERR_CHARS);
+            return LoginResponses.clientLogin(LoginHandshake.ERR_CHARS, cdkey);
         }
         if (!LoginHandshake.isValidMacToken(mac)) {
-            return encode(f.msgId, "ClientLogin", "由于你的版本过旧，请更新后再进入游戏！");
+            return LoginResponses.clientLogin("由于你的版本过旧，请更新后再进入游戏！", cdkey);
         }
         s.cdkey = cdkey;
         s.password = pass;
         s.macToken = mac;
         s.servId = servId;
         s.state = LoginHandshake.LoginState.WHILE_LOGIN;
-        return encode(f.msgId, "ClientLogin", LoginHandshake.OK);
+        return LoginResponses.clientLogin(LoginHandshake.OK, s.cdkey);
     }
 
     String charList(Session s, LssProtocolCodec.Frame f) {
         if (s.state == LoginHandshake.LoginState.NOT_LOGIN) {
-            return encode(f.msgId, "CharList", "failed");
+            return LoginResponses.charList("failed", "请不要进行非法登陆游戏！", s.cdkey);
         }
-        // stub: one empty slot list; real impl loads CharacterSaveCodec / DB
-        return encode(f.msgId, "CharList", "0");
+        // stub: empty slot list; real impl packs CharacterSaveCodec summaries
+        return LoginResponses.charList("0", "", s.cdkey);
     }
 
     String charLogin(Session s, LssProtocolCodec.Frame f) {
         if (s.state != LoginHandshake.LoginState.WHILE_LOGIN) {
-            return encode(f.msgId, "CharLogin", "Already Logged in");
+            return LoginResponses.charLogin("Already Logged in", "", s.cdkey);
         }
         if (f.tokens.isEmpty()) {
-            return encode(f.msgId, "CharLogin", "Can't access char have no name");
+            return LoginResponses.charLogin("Can't access char have no name", "", s.cdkey);
         }
         String name = LssProtocolCodec.demString(f.tokens.get(0));
         if (name.isEmpty() || LoginHandshake.isBadLoginString(name)) {
-            return encode(f.msgId, "CharLogin", "failed");
+            return LoginResponses.charLogin("failed", "", s.cdkey);
         }
         s.charName = name;
         s.state = LoginHandshake.LoginState.CHAR_LOGIN;
-        return encode(f.msgId, "CharLogin", LoginHandshake.OK);
+        return LoginResponses.charLogin(LoginHandshake.OK, name, s.cdkey);
     }
 
     String encode(long id, String cmd, Object... args) {
